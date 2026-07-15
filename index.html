@@ -1,114 +1,73 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DropuC — Официальный сайт</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<script>
+    // Твой ID канала на YouTube
+    const CHANNEL_ID = 'UCQjX_k4V4Z2E1Lz5c5lJ_5g'; 
 
-    <header class="header">
-        <div class="container header-container">
-            <div class="nav-brand">DropuC</div>
-            <nav class="nav-menu">
-                <a href="#about">О канале</a>
-                <a href="#me">Обо мне</a>
-                <a href="#videos">Видео</a>
-                <button id="theme-toggle" class="theme-btn" aria-label="Переключить тему">
-                    <span class="theme-icon">🌙</span>
-                </button>
-            </nav>
-        </div>
-    </header>
+    // Скрипт для переключения тем с сохранением выбора пользователя
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.querySelector('.theme-icon');
+    
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        themeIcon.textContent = '☀️';
+    } else {
+        themeIcon.textContent = '🌙';
+    }
 
-    <main class="container">
-        <section class="hero">
-            <h1>Добро пожаловать в мир DropuC!</h1>
-            <p>Официальный сайт твоего любимого канала по Minecraft.</p>
-            <a href="https://youtube.com/@dropucmc" target="_blank" class="btn">Перейти на канал</a>
-        </section>
-
-        <section id="about" class="content-block">
-            <h2>О канале</h2>
-            <p>Детальные разборы, теории, загадочные истории и видео в формате «айсбергов».</p>
-        </section>
-
-        <section id="me" class="content-block bio">
-            <h2>Обо мне</h2>
-            <p>Привет! Я Dropuc. Я создал этот канал, чтобы строить классное комьюнити. Старый канал я закрыл из-за проблем с алгоритмами и иностранными подписчиками, которые не смотрели видео. Теперь мы начинаем с чистого листа!</p>
-        </section>
-
-        <section id="videos" class="content-block">
-            <h2>Последние видео</h2>
-            <div id="video-grid" class="video-grid">
-                <p class="loading-text">Загрузка видео...</p>
-            </div>
-        </section>
-    </main>
-
-    <script>
-        // Скрипт для переключения тем с сохранением выбора пользователя
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.querySelector('.theme-icon');
-        
-        // Проверяем, сохранял ли пользователь тему ранее
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-            themeIcon.textContent = '☀️'; // Солнце для перехода на светлую
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+        let theme = 'light';
+        if (document.body.classList.contains('dark-theme')) {
+            theme = 'dark';
+            themeIcon.textContent = '☀️';
         } else {
-            themeIcon.textContent = '🌙'; // Луна для перехода на темную
+            themeIcon.textContent = '🌙';
         }
+        localStorage.setItem('theme', theme);
+    });
 
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
+    // Умная загрузка видео через RSS без использования API-ключей!
+    async function fetchVideos() {
+        const grid = document.getElementById('video-grid');
+        try {
+            // Используем RSS-фид Ютуба, перегнанный в JSON
+            const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
+            const apiConverterUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
             
-            let theme = 'light';
-            if (document.body.classList.contains('dark-theme')) {
-                theme = 'dark';
-                themeIcon.textContent = '☀️';
-            } else {
-                themeIcon.textContent = '🌙';
+            const res = await fetch(apiConverterUrl);
+            const data = await res.json();
+            
+            grid.innerHTML = '';
+            
+            if (!data.items || data.items.length === 0) {
+                grid.innerHTML = '<p class="loading-text">Видео не найдены или канал пуст.</p>';
+                return;
             }
-            localStorage.setItem('theme', theme);
-        });
 
-        // Загрузка видео с YouTube API
-        const API_KEY = 'AIzaSyBsth6VKAQkz3AcX27ic9zza52ajpyyeB8';
-        const CHANNEL_ID = 'UCQjX_k4V4Z2E1Lz5c5lJ_5g';
+            // Берем первые 3 последних видео
+            const latestVideos = data.items.slice(0, 3);
 
-        async function fetchVideos() {
-            try {
-                const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=3&type=video`;
-                const res = await fetch(url);
-                const data = await res.json();
-                const grid = document.getElementById('video-grid');
-                grid.innerHTML = '';
-                
-                if(!data.items || data.items.length === 0) {
-                    grid.innerHTML = '<p>Видео не найдены.</p>';
-                    return;
-                }
+            latestVideos.forEach(item => {
+                // Извлекаем ID видео из ссылки
+                const videoId = item.link.split('v=')[1];
+                const videoTitle = item.title;
+                const videoImg = item.thumbnail || `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
-                data.items.forEach(item => {
-                    const card = `
-                        <div class="card">
-                            <img src="${item.snippet.thumbnails.medium.url}" alt="Превью видео">
-                            <div class="card-info">
-                                <h3>${item.snippet.title}</h3>
-                                <a href="https://youtube.com/watch?v=${item.id.videoId}" target="_blank">Смотреть</a>
-                            </div>
+                const card = `
+                    <div class="card">
+                        <img src="${videoImg}" alt="Превью видео">
+                        <div class="card-info">
+                            <h3>${videoTitle}</h3>
+                            <a href="https://youtube.com/watch?v=${videoId}" target="_blank">Смотреть</a>
                         </div>
-                    `;
-                    grid.innerHTML += card;
-                });
-            } catch(e) { 
-                console.error(e); 
-                document.getElementById('video-grid').innerHTML = '<p>Не удалось загрузить последние видео.</p>';
-            }
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        } catch(e) { 
+            console.error("Ошибка загрузки фида:", e); 
+            grid.innerHTML = '<p class="loading-text" style="color: #ff5555;">Не удалось загрузить последние видео. Перейдите прямо на канал!</p>';
         }
-        fetchVideos();
-    </script>
-</body>
-</html>
+    }
+    fetchVideos();
+</script>
