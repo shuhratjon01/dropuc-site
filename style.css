@@ -1,59 +1,64 @@
-/* Переменные для легкой смены тем */
+/* Переменные стилей (Цвета MCPEHUB) */
 :root {
-    --background: #f9f9f9;
-    --text-color: #333333;
-    --block-bg: #ffffff;
-    --header-bg: #ffffff;
-    --border-color: #eeeeee;
-    --card-shadow: rgba(0, 0, 0, 0.05);
-    --btn-bg: #000000;
-    --btn-text: #ffffff;
-    --accent-color: #007bff;
+    --background: #2a201c; /* Темно-земляной фон */
+    /* Текстура земли на задний план */
+    --bg-image: url('https://www.transparenttextures.com/patterns/black-thread.png'); 
+    --text-color: #f0f0f0;
+    --block-bg: #211a17; /* Подложка блоков как в интерфейсе игры */
+    --header-bg: rgba(22, 17, 15, 0.95);
+    --border-color: #3a2e29;
+    --card-shadow: rgba(0, 0, 0, 0.5);
+    
+    --btn-bg: #4c8e1a; /* Насыщенный зеленый MCPEHUB */
+    --btn-hover: #5fa825;
+    --btn-shadow: #2f5c0f;
+    --accent-color: #55ff55;
 }
 
-/* Переменные для ТЕМНОЙ темы */
+/* Темная тема (Ночной незер-стиль) */
 .dark-theme {
-    --background: #121214;
-    --text-color: #e1e1e6;
-    --block-bg: #1a1a1e;
-    --header-bg: #1a1a1e;
-    --border-color: #29292e;
-    --card-shadow: rgba(0, 0, 0, 0.3);
-    --btn-bg: #ffffff;
-    --btn-text: #121214;
-    --accent-color: #00b37e; /* Зеленый неоновый для темной темы */
+    --background: #120c10;
+    --text-color: #e2d1d6;
+    --block-bg: #1c1218;
+    --header-bg: rgba(15, 9, 13, 0.95);
+    --border-color: #2e1a26;
+    --btn-bg: #b82c4d; /* Багрово-красный */
+    --btn-hover: #d13d60;
+    --btn-shadow: #7a162e;
+    --accent-color: #ff5555;
 }
 
-/* Сброс стилей */
+/* Базовые сбросы */
 * { 
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 body { 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-    line-height: 1.6; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     color: var(--text-color); 
-    background-color: var(--background); 
+    background-color: var(--background);
+    background-image: var(--bg-image); /* Бесшовная стильная текстура */
+    line-height: 1.6;
 }
 
-/* Контейнер */
 .container { 
-    max-width: 900px; 
+    max-width: 960px; 
     margin: 0 auto; 
     padding: 0 20px; 
 }
 
-/* Шапка сайта */
+/* Современная липкая шапка сайта */
 .header { 
     background-color: var(--header-bg); 
     padding: 15px 0; 
-    border-bottom: 1px solid var(--border-color); 
+    border-bottom: 3px solid var(--border-color); 
     position: sticky;
     top: 0;
     z-index: 1000;
+    backdrop-filter: blur(8px); /* Красивое размытие сзади шапки */
 }
 
 .header-container { 
@@ -63,171 +68,229 @@ body {
 }
 
 .nav-brand { 
-    font-weight: bold; 
-    font-size: 1.5rem; 
-    color: var(--text-color); 
+    font-weight: 800;
+    font-size: 1.6rem; 
+    color: #ffb81e; /* Золотой логотип */
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+    letter-spacing: 1px;
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .nav-menu a { 
     text-decoration: none; 
     color: var(--text-color); 
-    font-weight: 500;
-    opacity: 0.8;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    font-size: 0.95rem;
 }
 
 .nav-menu a:hover {
-    opacity: 1;
     color: var(--accent-color);
 }
 
-/* Кнопка переключения темы */
+/* Круглая кнопка переключателя темы */
 .theme-btn {
-    background: none;
-    border: 1px solid var(--border-color);
-    padding: 6px 10px;
-    border-radius: 8px;
+    background-color: var(--block-bg);
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    padding: 8px;
+    border-radius: 50%;
     cursor: pointer;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
-    background-color: var(--block-bg);
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
 .theme-btn:hover {
     transform: scale(1.05);
+    border-color: var(--accent-color);
 }
 
-/* Блоки */
+/* Геройский блок (Главный баннер) */
 .hero { 
     text-align: center; 
-    padding: 60px 0 40px 0; 
+    padding: 50px 0 20px 0; 
+}
+
+.hero-box {
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(30,20,15,0.7) 100%);
+    padding: 45px 25px;
+    border-radius: 16px;
+    border: 3px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
 }
 
 .hero h1 { 
-    font-size: 2.5rem; 
-    margin-bottom: 10px; 
-    line-height: 1.2;
+    font-size: 2.4rem; 
+    font-weight: 900;
+    margin-bottom: 15px; 
+    color: #ffffff;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.8);
+    letter-spacing: 1px;
 }
 
 .hero p {
-    color: var(--text-color);
-    opacity: 0.8;
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: 0.9;
+    color: #e0e0e0;
 }
 
-.content-block { 
+/* Контентные блоки как на MCPEHUB (Сглаженные карточки) */
+.mc-block { 
     background-color: var(--block-bg); 
     padding: 30px; 
-    border-radius: 12px; 
-    margin: 20px 0; 
-    box-shadow: 0 4px 6px var(--card-shadow); 
-    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    border: 3px solid var(--border-color);
+    box-shadow: 0 8px 24px var(--card-shadow);
+    margin: 25px 0; 
 }
 
-.content-block h2 {
-    margin-bottom: 15px;
+.mc-block h2 {
+    color: #ffb81e;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    border-left: 5px solid var(--accent-color);
+    padding-left: 15px;
+    letter-spacing: 0.5px;
 }
 
-/* Кнопка */
-.btn { 
+/* Кнопки в стиле MCPEHUB (Объемные и кликабельные) */
+.mc-btn { 
     background-color: var(--btn-bg); 
-    color: var(--btn-text); 
-    padding: 12px 24px; 
+    color: #ffffff; 
+    padding: 12px 28px; 
     text-decoration: none; 
-    border-radius: 8px; 
+    font-weight: 800;
+    border-radius: 8px;
     display: inline-block; 
-    margin-top: 15px; 
-    font-weight: bold;
+    margin-top: 20px; 
+    font-size: 1rem;
+    border-bottom: 4px solid var(--btn-shadow);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    text-align: center;
 }
 
-.btn:hover {
-    opacity: 0.9;
+.mc-btn:hover {
+    background-color: var(--btn-hover);
+    transform: translateY(-2px);
 }
 
-/* Сетка видео */
+.mc-btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 0px;
+    margin-bottom: 4px;
+}
+
+/* Сетка видеороликов */
 .video-grid { 
     display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    gap: 20px; 
-    margin-top: 20px; 
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+    gap: 25px; 
+    margin-top: 25px; 
 }
 
-.card { 
-    background-color: var(--block-bg); 
-    border-radius: 12px; 
-    overflow: hidden; 
-    box-shadow: 0 4px 10px var(--card-shadow); 
-    border: 1px solid var(--border-color);
+/* Карточки видео в стиле MCPEHUB */
+.mc-card { 
+    background-color: rgba(0, 0, 0, 0.25); 
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.card img { 
-    width: 100%; 
-    display: block;
+.mc-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(85, 255, 85, 0.2);
+}
+
+.card-img-wrapper {
+    position: relative;
+    padding-top: 56.25%; /* Формат кадра 16:9 */
+    overflow: hidden;
+}
+
+.mc-card img { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .card-info {
-    padding: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
 }
 
-.card h3 { 
+.mc-card h3 { 
     font-size: 1rem; 
-    margin-bottom: 10px; 
+    font-weight: 700;
+    margin-bottom: 15px; 
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;  
     overflow: hidden;
-    color: var(--text-color);
+    line-height: 1.4;
+    color: #ffffff;
 }
 
-.card a { 
-    display: inline-block; 
-    color: var(--accent-color); 
-    text-decoration: none; 
-    font-weight: bold; 
-}
-
-.card a:hover {
-    text-decoration: underline;
+/* Кнопка внутри карточки */
+.card-btn {
+    margin-top: auto;
+    width: 100%;
+    padding: 8px 15px;
+    font-size: 0.9rem;
 }
 
 .loading-text {
     text-align: center;
     grid-column: 1/-1;
-    color: var(--text-color);
-    opacity: 0.6;
+    color: #ffb81e;
+    font-weight: 700;
+    padding: 20px 0;
 }
 
-/* =======================================================
-   АДАПТИВНОСТЬ ПОД ТЕЛЕФОНЫ (Экраны меньше 600px)
-   ======================================================= */
+/* Мобильная адаптация */
 @media (max-width: 600px) {
     .header-container {
-        flex-direction: column; /* Элементы шапки выстраиваются в столбик */
-        gap: 10px;
+        flex-direction: column;
+        gap: 15px;
     }
 
     .nav-menu {
-        flex-wrap: wrap; /* Меню навигации переносится на новую строку при необходимости */
+        flex-wrap: wrap;
         justify-content: center;
         width: 100%;
     }
 
     .hero h1 {
-        font-size: 1.8rem; /* Чуть уменьшаем заголовок на смартфонах */
+        font-size: 1.8rem;
     }
 
-    .content-block {
-        padding: 20px; /* Уменьшаем внутренние отступы, чтобы выиграть место */
-        margin: 15px 0;
+    .mc-block {
+        padding: 20px;
+        margin: 20px 0;
     }
 
     .video-grid {
-        grid-template-columns: 1fr; /* Ровно 1 карточка в ряд на телефонах */
+        grid-template-columns: 1fr;
     }
 }
