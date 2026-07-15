@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DropuC — Официальный сайт</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo-area">
+                <img id="channel-avatar" src="https://via.placeholder.com/50" alt="Логотип DropuC" class="logo-img">
+                <span id="channel-title" class="logo-text">DropuC</span>
+            </div>
+            <nav class="nav">
+                <a href="#about" class="nav-link">О канале</a>
+                <a href="#me" class="nav-link">Обо мне</a>
+                <a href="#videos" class="nav-link">Видео</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-container">
+            <h1 class="hero-title">Добро пожаловать в мир DropuC!</h1>
+            <p class="hero-subtitle">Официальный сайт канала по Minecraft. Самые свежие видеоролики загружаются сюда автоматически!</p>
+            <a href="https://youtube.com/@dropucmc?si=X8mdN1a9PlEgd_SO" target="_blank" class="btn btn-primary">Перейти на канал</a>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">О канале</h2>
+            <div class="about-content">
+                <p>Привет! Меня зовут DropuC, и я создаю контент по вселенной Minecraft. На моем канале вы найдете детальные разборы игровых механик, захватывающие теории, загадочные истории и подробные видео в формате «айсбергов».</p>
+                <p>Я стараюсь делать каждое видео максимально качественным, информативным и интересным. Подписывайтесь, чтобы исследовать тайны Minecraft вместе со мной!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="me" class="bio-section">
+        <div class="container">
+            <h2 class="section-title">Обо мне</h2>
+            <div class="bio-content">
+                <p>Привет, ребята! Это я, <strong>Dropuc</strong>. Добро пожаловать на мой личный сайт!</p>
+                <p>Хотелось бы рассказать вам немного о себе. Пока что свое настоящее имя и место проживания я раскрыть не могу, но хочу поделиться важной историей развития моего творчества.</p>
+                <p>Это мой второй канал. Мой самый первый канал был точно такой же и существовал под псевдонимом <strong>@dropuc</strong> (нынешний же псевдоним канала — <strong>@dropucMC</strong>). Я принял непростое решение полностью очистить старый канал, и сейчас его уже невозможно найти на просторах YouTube.</p>
+                <p><strong>Почему я так поступил?</strong> Всё дело в алгоритмах YouTube. На старом канале было очень много иностранных подписчиков, которые не смотрели мои новые длинные видеоролики. Из-за этого актив критически падал: алгоритмы видели, что мой контент не интересен даже моим собственным подписчикам, и переставали продвигать видео. В лучшем случае я получал всего около 10 просмотров на ролик.</p>
+                <p>Именно поэтому я решил начать всё с чистого листа на канале <strong>@dropucMC</strong>. Спасибо огромное каждому из вас за поддержку и за уделенное время!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="videos" class="videos-section">
+        <div class="container">
+            <h2 class="section-title">Последние видео</h2>
+            <div id="video-grid" class="video-grid">
+                <p style="text-align: center; grid-column: 1/-1;">Загрузка свежих видео с YouTube...</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 DropuC. Все права защищены. Разработано с любовью к Minecraft.</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_KEY = 'AIzaSyBsth6VKAQkz3AcX27ic9zza52ajpyyeB8'; 
+        const CHANNEL_HANDLE = 'dropucmc'; 
+
+        async function fetchYouTubeData() {
+            try {
+                const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
+                const channelResponse = await fetch(channelUrl);
+                const channelData = await channelResponse.json();
+
+                if (!channelData.items || channelData.items.length === 0) {
+                    console.error("Канал не найден.");
+                    document.getElementById('video-grid').innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #ff5555;">Канал не найден. Проверьте настройки.</p>';
+                    return;
+                }
+
+                const channel = channelData.items[0];
+                const title = channel.snippet.title;
+                const avatarUrl = channel.snippet.thumbnails.medium.url;
+                const uploadsPlaylistId = channel.contentDetails.relatedPlaylists.uploads;
+
+                document.getElementById('channel-title').innerText = title;
+                document.getElementById('channel-avatar').src = avatarUrl;
+
+                const videosUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=3&key=${API_KEY}`;
+                const videosResponse = await fetch(videosUrl);
+                const videosData = await videosResponse.json();
+
+                const videoGrid = document.getElementById('video-grid');
+                videoGrid.innerHTML = '';
+
+                videosData.items.forEach(item => {
+                    const videoId = item.snippet.resourceId.videoId;
+                    const videoTitle = item.snippet.title;
+                    
+                    let videoDescription = item.snippet.description || '';
+                    if (videoDescription.length > 100) {
+                        videoDescription = videoDescription.substring(0, 100) + '...';
+                    } else if (videoDescription.length === 0) {
+                        videoDescription = 'Описание отсутствует.';
+                    }
+                    
+                    const videoImg = item.snippet.thumbnails.high ? item.snippet.thumbnails.high.url : item.snippet.thumbnails.medium.url;
+                    const videoLink = `https://www.youtube.com/watch?v=${videoId}`;
+
+                    const cardHTML = `
+                        <div class="video-card">
+                            <img src="${videoImg}" alt="${videoTitle}" class="video-preview">
+                            <div class="video-info">
+                                <h3 class="video-card-title">${videoTitle}</h3>
+                                <p class="video-card-desc">${videoDescription}</p>
+                                <a href="${videoLink}" target="_blank" class="btn btn-secondary">Смотреть на YouTube</a>
+                            </div>
+                        </div>
+                    `;
+                    videoGrid.innerHTML += cardHTML;
+                });
+
+            } catch (error) {
+                console.error("Ошибка YouTube API:", error);
+                document.getElementById('video-grid').innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #ff5555;">Не удалось загрузить видео.</p>';
+            }
+        }
+
+        fetchYouTubeData();
+    </script>
+</body>
+</html>
