@@ -1,0 +1,249 @@
+/* ОБЩИЕ СТИЛИ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0f0f12;
+    color: #ffffff;
+    scroll-behavior: smooth;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ШАПКА */
+.header {
+    background-color: rgba(15, 15, 18, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #1a1a1e;
+    padding: 15px 0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #00b37e;
+    object-fit: cover;
+}
+
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: #aaaaaa;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #00b37e;
+}
+
+/* ГЛАВНЫЙ БАННЕР */
+.hero {
+    padding: 120px 0 80px 0;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(0, 179, 126, 0.1) 0%, rgba(15, 15, 18, 0) 100%);
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #aaaaaa;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    line-height: 1.6;
+}
+
+/* КНОПКИ */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background-color: #00b37e;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #00996b;
+}
+
+.btn-secondary {
+    background-color: #1a1a1e;
+    color: #00b37e;
+    border: 1px solid #00b37e;
+    text-align: center;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.btn-secondary:hover {
+    background-color: #00b37e;
+    color: #ffffff;
+}
+
+/* СЕКЦИЯ О КАНАЛЕ */
+.about-section {
+    padding: 80px 0;
+    border-top: 1px solid #1a1a1e;
+}
+
+.section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: #00b37e;
+    margin: 10px auto 0 auto;
+    border-radius: 2px;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    color: #aaaaaa;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.about-content p {
+    margin-bottom: 20px;
+}
+
+/* СЕКЦИЯ ОБО МНЕ */
+.bio-section {
+    background-color: #141417;
+    padding: 80px 0;
+    border-top: 1px solid #222226;
+    border-bottom: 1px solid #222226;
+}
+
+.bio-content {
+    max-width: 800px;
+    margin: 0 auto;
+    color: #cccccc;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.bio-content p {
+    margin-bottom: 20px;
+}
+
+.bio-content strong {
+    color: #00b37e;
+}
+
+/* СЕКЦИЯ ВИДЕО */
+.videos-section {
+    padding: 80px 0;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.video-card {
+    background-color: #141417;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #222226;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 179, 126, 0.15);
+}
+
+.video-preview {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+.video-info {
+    padding: 20px;
+}
+
+.video-card-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    color: #ffffff;
+}
+
+.video-card-desc {
+    font-size: 0.9rem;
+    color: #aaaaaa;
+    line-height: 1.5;
+}
+
+/* ПОДВАЛ */
+.footer {
+    background-color: #09090b;
+    padding: 40px 0;
+    text-align: center;
+    color: #555555;
+    font-size: 0.9rem;
+    border-top: 1px solid #1a1a1e;
+}
