@@ -1,5 +1,5 @@
 /* =========================================================================
-   ОБЩИЕ СБРОСЫ И НАСТРОЙКИ СТИЛЕЙ
+   1. ОБЩИЕ СБРОСЫ И БАЗОВЫЕ НАСТРОЙКИ СТИЛЕЙ
    ========================================================================= */
 * {
     margin: 0;
@@ -9,7 +9,7 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #060913; /* Очень глубокий космический цвет для контраста сфер */
+    background-color: #060913; /* Глубокий темный фон для сочности свечения */
     color: #f8fafc;
     line-height: 1.6;
     overflow-x: hidden;
@@ -17,7 +17,7 @@ body {
 }
 
 /* =========================================================================
-   ЖИДКОЕ СТЕКЛО: АНИМИРОВАННЫЕ ЦВЕТНЫЕ СФЕРЫ НА ФОНЕ
+   2. ЖИДКОЕ СТЕКЛО (LIQUID GLASS EFFECT) — СФЕРЫ НА ФОНЕ
    ========================================================================= */
 .glass-bg-container {
     position: fixed;
@@ -25,24 +25,23 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Сферы строго за контентом */
+    z-index: -1;
     overflow: hidden;
 }
 
 .glass-sphere {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px); /* Сильное размытие делает сферы "жидкими" и мягкими */
+    filter: blur(90px); /* Мягкое размытие краев жидких капель */
     opacity: 0.45;
     animation: float 25px infinite alternate ease-in-out;
 }
 
-/* Настройки цветов и размеров для каждой жидкой капли */
 .sphere-emerald {
     width: 450px;
     height: 450px;
     background: radial-gradient(circle, #00e676 0%, rgba(0,230,118,0) 70%);
-    top: -10%,;
+    top: -10%;
     right: 10%;
     animation-duration: 20s;
 }
@@ -65,44 +64,39 @@ body {
     animation-duration: 18s;
 }
 
-/* CSS-анимация покачивания сфер */
+/* Плавная плавающая анимация */
 @keyframes float {
     0% { transform: translateY(0) scale(1) translateX(0); }
-    100% { transform: translateY(-40px) scale(1.1) translateX(30px); }
+    100% { transform: translateY(-40px) scale(1.08) translateX(30px); }
 }
 
-/* =========================================================================
-   ГЛАВНЫЙ ЭФФЕКТ МАТОВОГО СТЕКЛА (GLASSMORPHISM)
-   ========================================================================= */
+/* ГЛАВНЫЙ КЛАСС GLASSMORPHISM */
 .glass-card {
-    background: rgba(255, 255, 255, 0.03); /* Ультра-прозрачный белый */
-    backdrop-filter: blur(25px); /* Экстремальное размытие iOS */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.12); /* Эффект сияющей кромки полированного стекла */
+    border: 1px solid rgba(255, 255, 255, 0.12); /* Блик стеклянного ребра */
     border-radius: 24px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 
-                inset 0 1px 0 rgba(255, 255, 255, 0.1); /* Внутренний блик сверху */
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* =========================================================================
-   СЕТКА ПРИЛОЖЕНИЯ: БОКОВАЯ ПАНЕЛЬ И КОНТЕНТ (GRID SYSTEM)
+   3. СЕТКА ПРИЛОЖЕНИЯ И ВЕРСТКА СТРАНИЦЫ
    ========================================================================= */
 .app-container {
     display: grid;
-    grid-template-columns: 280px 1fr; /* Левое меню 280px, остальное — контент */
+    grid-template-columns: 280px 1fr;
     min-height: 100vh;
 }
 
-/* МОБИЛЬНАЯ ШАПКА (Изначально скрыта на ПК) */
 .mobile-header {
-    display: none;
+    display: none; /* Скрыто на компьютерах */
 }
 
-/* =========================================================================
-   СТИЛИЗАЦИЯ БОКОВОГО МЕНЮ (САЙДБАР)
-   ========================================================================= */
+/* БОКОВАЯ ПАНЕЛЬ НАВИГАЦИИ */
 .sidebar {
-    background: rgba(10, 15, 30, 0.4); /* Чуть темнее контента для контраста */
+    background: rgba(10, 15, 30, 0.4);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     border-right: 1px solid rgba(255, 255, 255, 0.08);
@@ -119,7 +113,7 @@ body {
 }
 
 .close-mobile-menu {
-    display: none; /* Скрыто на ПК */
+    display: none;
 }
 
 .sidebar-top {
@@ -128,7 +122,6 @@ body {
     gap: 15px;
 }
 
-/* Логотип и Аватарка */
 .logo {
     display: flex;
     align-items: center;
@@ -158,7 +151,6 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Элементы управления меню (Кнопки-вкладки) */
 .sidebar-nav {
     display: flex;
     flex-direction: column;
@@ -186,7 +178,6 @@ body {
     border-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Стиль для активной выбранной вкладки */
 .nav-item.active {
     color: #0b0f19;
     background: linear-gradient(135deg, #4ade80, #2dd4bf);
@@ -195,27 +186,28 @@ body {
 }
 
 /* =========================================================================
-   ЛОГИКА ВТИХАРЯ: СКРЫТИЕ/ПОКАЗ ВКЛАДОК (TAB MANAGEMENT)
+   4. ГЛАВНАЯ ЗОНА ОТОБРАЖЕНИЯ И СКРЫТИЕ ВКЛАДОК
    ========================================================================= */
 .main-content {
-    grid-column: 2; /* Контент строго во 2-й колонке грида */
-    padding: 60px 40px;
+    grid-column: 2;
+    padding: 40px;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    margin-left: 280px; /* Отступ равен ширине сайдбара */
+    align-items: center; /* Центровка контента для стиля iOS приложений */
+    margin-left: 280px;
+    height: 100vh;
+    overflow: hidden; /* Отключаем прокрутку всего сайта на ПК */
 }
 
 .tab-content {
-    display: none; /* Изначально все разделы полностью скрыты */
+    display: none; /* По умолчанию разделы полностью невидимы */
     width: 100%;
-    max-width: 750px;
-    animation: fadeInTab 0.4s ease-out forwards;
+    max-width: 720px;
+    animation: fadeInTab 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Показываем только активную вкладку */
 .tab-content.active {
-    display: block;
+    display: block; /* Показывается только активная вкладка */
 }
 
 @keyframes fadeInTab {
@@ -224,11 +216,14 @@ body {
 }
 
 /* =========================================================================
-   СТИЛИ ДЛЯ КАРТОЧЕК И РАЗДЕЛОВ
+   5. СТИЛИЗАЦИЯ ВКЛАДКИ "ОБО МНЕ" С СКРОЛЛОМ
    ========================================================================= */
-.about-card, .chat-section {
+.about-card {
     padding: 40px;
     width: 100%;
+    max-height: 85vh; /* Ограничиваем карту по высоте на ПК */
+    display: flex;
+    flex-direction: column;
 }
 
 .badge {
@@ -241,54 +236,92 @@ body {
     font-weight: 600;
     margin-bottom: 20px;
     border: 1px solid rgba(74, 222, 128, 0.2);
+    align-self: flex-start;
 }
 
 .about-card h1 {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 20px;
+    background: linear-gradient(135deg, #ffffff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.about-text {
+/* КОНТЕЙНЕР ДЛЯ ВНУТРЕННЕЙ ПРОКРУТКИ ТЕКСТА */
+.about-scroll-container {
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    padding-right: 15px;
+    flex-grow: 1;
+}
+
+.about-paragraph {
     color: #cbd5e1;
-    font-size: 16px;
+    font-size: 15.5px;
     line-height: 1.8;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    text-align: justify;
 }
 
-/* Блок-заглушка под твой новый текст */
-.about-placeholder-box {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px dashed rgba(74, 222, 128, 0.4);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 30px;
-    text-align: left;
-}
-
-.placeholder-title {
+/* Неоновые текстовые маркеры */
+.highlight-text {
     color: #4ade80;
     font-weight: 600;
-    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.25);
 }
 
-.chat-badge-link {
-    background: rgba(74, 222, 128, 0.04);
-    border: 1px solid rgba(74, 222, 128, 0.3);
-    color: #4ade80;
-    font-weight: 600;
-    padding: 12px 24px;
+.channel-name {
+    color: #2dd4bf;
+    font-weight: 700;
+}
+
+.about-actions {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Кнопка YouTube */
+.btn-youtube {
+    display: inline-block;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 28px;
     border-radius: 14px;
-    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
     transition: all 0.3s ease;
 }
 
-.chat-badge-link:hover {
-    background: rgba(74, 222, 128, 0.15);
-    box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+.btn-youtube:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.45);
+    filter: brightness(1.1);
 }
 
-/* Кнопки */
+/* Тонкий стеклянный ползунок прокрутки */
+.about-scroll-container::-webkit-scrollbar {
+    width: 6px;
+}
+.about-scroll-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 10px;
+}
+.about-scroll-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.about-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(74, 222, 128, 0.4);
+}
+
+/* =========================================================================
+   6. ОБЩИЕ СТИЛИ КНОПОК И ФОРМ
+   ========================================================================= */
 .btn {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
@@ -307,10 +340,14 @@ body {
 
 .btn-primary:hover {
     box-shadow: 0 8px 25px rgba(74, 222, 128, 0.35);
-    filter: brightness(1.05);
 }
 
-/* Чат */
+/* СТИЛИ ОНЛАЙН ЧАТА */
+.chat-section {
+    padding: 30px;
+    width: 100%;
+}
+
 .chat-header {
     display: flex;
     justify-content: space-between;
@@ -329,7 +366,7 @@ body {
 }
 
 .chat-messages {
-    height: 350px;
+    height: 380px;
     overflow-y: auto;
     padding-right: 10px;
     display: flex;
@@ -338,11 +375,11 @@ body {
     margin: 20px 0;
 }
 
-.chat-messages::-webkit-scrollbar { width: 6px; }
+.chat-messages::-webkit-scrollbar { width: 5px; }
 .chat-messages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
 
 .message {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
     padding: 12px 16px;
     border-radius: 16px;
@@ -350,9 +387,14 @@ body {
     max-width: 85%;
 }
 
-.message-author { font-weight: 600; color: #4ade80; margin-right: 15px;}
+.message-author { font-weight: 600; color: #4ade80; margin-right: 12px;}
 .message-time { color: #64748b; font-size: 11px; }
-.message-text { color: #e2e8f0; margin-top: 4px; font-size: 14.5px; }
+.message-text { color: #e2e8f0; margin-top: 4px; font-size: 14.5px; word-break: break-word; }
+
+.chat-form {
+    display: flex;
+    gap: 10px;
+}
 
 .chat-input {
     flex-grow: 1;
@@ -375,7 +417,26 @@ body {
     cursor: pointer;
 }
 
-/* FAQ раздел */
+.chat-guest-prompt {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+#chatRegLink {
+    color: #4ade80;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* =========================================================================
+   7. СТИЛИ ДЛЯFAQ (АККОРДЕОН)
+   ========================================================================= */
 .faq-title {
     text-align: center;
     font-size: 28px;
@@ -385,7 +446,7 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
-.faq-container { display: flex; flex-direction: column; gap: 15px; }
+.faq-container { display: flex; flex-direction: column; gap: 15px; width: 100%; }
 .faq-item { overflow: hidden; transition: all 0.3s ease; }
 .faq-item:hover { border-color: rgba(74, 222, 128, 0.3); }
 
@@ -398,7 +459,7 @@ body {
 
 .faq-arrow { font-size: 12px; color: #64748b; transition: transform 0.3s; }
 .faq-item.active .faq-arrow { transform: rotate(180deg); color: #4ade80; }
-.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 20px; color: #94a3b8; font-size: 14px; }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 20px; color: #94a3b8; font-size: 14.5px; }
 .faq-item.active .faq-answer { padding-bottom: 20px; }
 
 .btn-download {
@@ -408,7 +469,7 @@ body {
     font-size: 14px; font-weight: 600;
 }
 
-/* Модальное окно */
+/* МОДАЛЬНЫЕ ОКНА */
 .modal {
     display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-color: rgba(4, 6, 12, 0.7); backdrop-filter: blur(12px);
@@ -426,14 +487,14 @@ body {
 .success-msg { color: #10b981; font-size: 13px; margin-top: 10px; display: none; }
 
 /* =========================================================================
-   МОБИЛЬНАЯ АДАПТАЦИЯ (CSS MEDIA QUERIES) — СМАРТФОНЫ И ПЛАНШЕТЫ
+   8. УЛЬТРА-АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ (MEDIA QUERIES)
    ========================================================================= */
 @media (max-width: 900px) {
     .app-container {
-        grid-template-columns: 1fr; /* Убираем двухколоночный режим */
+        grid-template-columns: 1fr;
     }
 
-    /* Включаем верхнюю мобильную плашку */
+    /* Активация верхней мобильной плашки */
     .mobile-header {
         display: flex;
         justify-content: space-between;
@@ -461,25 +522,23 @@ body {
         cursor: pointer;
     }
 
-    /* Трансформируем левое меню в выезжающую боковую шторку */
+    /* Преобразование меню в выезжающую боковую шторку */
     .sidebar {
         position: fixed;
-        left: -290px; /* Изначально спрятано за левым краем экрана */
+        left: -290px; /* Спрятано */
         top: 0;
         width: 280px;
         height: 100vh;
         transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 150;
-        background: rgba(10, 15, 30, 0.85); /* Чуть плотнее на мобильных */
+        background: rgba(10, 15, 30, 0.9);
         box-shadow: 20px 0 40px rgba(0,0,0,0.6);
     }
 
-    /* Класс, который JS будет вешать на меню для его открытия */
     .sidebar.open {
-        left: 0;
+        left: 0; /* Выезжает по команде из JS */
     }
 
-    /* Показываем кнопку закрытия меню внутри шторки */
     .close-mobile-menu {
         display: block;
         position: absolute;
@@ -492,22 +551,27 @@ body {
         cursor: pointer;
     }
 
-    /* Корректируем область основного контента */
+    /* Мобильный рендеринг рабочей зоны контента */
     .main-content {
-        margin-left: 0; /* Убираем левый отступ на мобилках */
-        padding: 110px 15px 40px 15px; /* 110px сверху чтобы контент не залезал под mobile-header */
+        margin-left: 0;
+        padding: 95px 12px 20px 12px; /* Защита от залезания под мобильную шапку */
+        height: auto;
+        min-height: calc(100vh - 70px);
+        overflow: visible; /* На смартфонах листаем привычно всю страницу */
     }
 
     .about-card, .chat-section {
-        padding: 25px 15px;
+        padding: 24px 16px;
+        max-height: none; /* Убираем жесткий внутренний скролл */
     }
 
+    .about-scroll-container {
+        overflow-y: visible;
+        padding-right: 0;
+    }
+    
     .about-card h1 { font-size: 24px; }
-    .about-text { font-size: 14.5px; }
-    
-    .chat-messages { height: 280px; }
-    .chat-form { flex-direction: column; }
-    .btn-send { padding: 12px; }
-    
+    .about-paragraph { font-size: 14.5px; text-align: left; }
+    .chat-messages { height: 300px; }
     .faq-question { font-size: 14.5px; padding: 15px; }
 }
