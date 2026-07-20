@@ -1,14 +1,13 @@
 /**
  * =========================================================================
- * dropuc-sait — Официальный скрипт сайта Dropuc (Обновленная версия)
- * Разработчики: Dropuc & Партнер программиста
- * Назначение: Защищенная авторизация, real-time чат, интерактивный FAQ,
- * управление стеклянными вкладками и адаптивным мобильным меню.
+ * dropuc-sait — Официальный скрипт сайта Dropuc
+ * Разработка: Dropuc & Партнер программиста
+ * Технологии: Firebase Realtime Database v8, Вкладки, Адаптивное меню.
  * =========================================================================
  */
 
 // =========================================================================
-// 1. НАСТРОЙКА И ИНИЦИАЛИЗАЦИЯ GOOGLE FIREBASE
+// 1. ИНИЦИАЛИЗАЦИЯ GOOGLE FIREBASE
 // =========================================================================
 const firebaseConfig = {
     apiKey: "AIzaSyDS7bXTTeEgUcKhVrGShqrpT5gQNus6cqI",
@@ -25,7 +24,7 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 // =========================================================================
-// 2. ПОИСК HTML-ЭЛЕМЕНТОВ (DOM)
+// 2. ДЕКЛАРАЦИЯ DOM-ПЕРЕМЕННЫХ (HTML ЭЛЕМЕНТЫ)
 // =========================================================================
 const authModal = document.getElementById('authModal');
 const openAuthBtn = document.getElementById('openAuthBtn');
@@ -43,54 +42,44 @@ const chatMessages = document.getElementById('chatMessages');
 const chatInputArea = document.getElementById('chatInputArea');
 const submitBtn = document.getElementById('submitBtn');
 
-// Новые элементы для логики вкладок и мобильного меню
+// Переменные навигации разделов и боковой панели
 const navItems = document.querySelectorAll('.nav-item');
 const tabContents = document.querySelectorAll('.tab-content');
 const sidebarMenu = document.getElementById('sidebarMenu');
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const closeMobileMenu = document.getElementById('closeMobileMenu');
-const switchToChatBtn = document.getElementById('switchToChatBtn');
 
 // =========================================================================
-// 新. УПРАВЛЕНИЕ ВКЛАДКАМИ (ТАБЫ) И МОБИЛЬНЫМ МЕНЮ
+// 3. МЕНЕДЖЕР ВКЛАДОК И ВЫЕЗДНОГО МЕНЮ ДЛЯ СМАРТФОНОВ
 // =========================================================================
 
-// Функция для активации нужной вкладки по её ID
+// Функция плавного и безопасного переключения страниц
 function switchTab(tabId) {
-    // 1. Скрываем все вкладки контента
+    // Скрываем весь контент
     tabContents.forEach(tab => tab.classList.remove('active'));
-    
-    // 2. Снимаем активный класс со всех кнопок в меню
+    // Убираем подсветку кнопок
     navItems.forEach(item => item.classList.remove('active'));
 
-    // 3. Показываем нужную вкладку
+    // Включаем целевой блок
     const targetTab = document.getElementById(tabId);
     if (targetTab) targetTab.classList.add('active');
 
-    // 4. Подсвечиваем соответствующую кнопку в меню
+    // Подсвечиваем активную кнопку
     const targetNavItem = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
     if (targetNavItem) targetNavItem.classList.add('active');
 }
 
-// Слушатель кликов по элементам бокового меню
+// Отслеживание кликов по кнопкам в левом меню
 navItems.forEach(item => {
     item.addEventListener('click', () => {
         const targetTabId = item.getAttribute('data-tab');
         switchTab(targetTabId);
-        
-        // На мобильных устройствах закрываем шторку меню после выбора раздела
+        // Закрываем шторку на смартфонах после клика
         sidebarMenu.classList.remove('open');
     });
 });
 
-// Дополнительная кнопка "Перейти в чатик" внутри вкладки "О себе"
-if (switchToChatBtn) {
-    switchToChatBtn.addEventListener('click', () => {
-        switchTab('chat-tab');
-    });
-}
-
-// Логика открытия и закрытия шторки меню на телефонах
+// Работа мобильного меню
 if (mobileMenuToggle) {
     mobileMenuToggle.addEventListener('click', () => {
         sidebarMenu.classList.add('open');
@@ -103,9 +92,8 @@ if (closeMobileMenu) {
     });
 }
 
-
 // =========================================================================
-// 3. ЛОГИКА ЗАЩИЩЕННОЙ АВТОРИЗАЦИИ (ОБЛАЧНАЯ ПРОВЕРКА ПАРОЛЕЙ)
+// 4. СИСТЕМА ОБЛАЧНОЙ АВТОРИЗАЦИИ ПОЛЬЗОВАТЕЛЕЙ
 // =========================================================================
 
 function checkUserLogin() {
@@ -161,6 +149,7 @@ regForm.addEventListener('submit', function(e) {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Проверка...';
 
+    // Запрос в Firebase для проверки пользователя
     database.ref('users/' + username).once('value').then((snapshot) => {
         const userData = snapshot.val();
 
@@ -182,6 +171,7 @@ regForm.addEventListener('submit', function(e) {
                 submitBtn.textContent = 'Войти / Создать';
             }
         } else {
+            // Если пользователя нет — создаем новый аккаунт
             database.ref('users/' + username).set({
                 password: password
             }).then(() => {
@@ -196,13 +186,13 @@ regForm.addEventListener('submit', function(e) {
                     submitBtn.textContent = 'Войти / Создать';
                 }, 1500);
             }).catch((err) => {
-                showError('Ошибка базы данных: ' + err.message);
+                showError('Ошибка БД: ' + err.message);
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Войти / Создать';
             });
         }
     }).catch((err) => {
-        showError('Ошибка связи с сервером: ' + err.message);
+        showError('Ошибка сервера: ' + err.message);
         submitBtn.disabled = false;
         submitBtn.textContent = 'Войти / Создать';
     });
@@ -214,7 +204,7 @@ function showError(text) {
 }
 
 // =========================================================================
-// 4. ОНЛАЙН-ЧАТ В РЕАЛЬНОМ ВРЕМЕНИ (GOOGLE FIREBASE)
+// 5. МОДУЛЬ REALTIME ЧАТА (GOOGLE FIREBASE DATABASE)
 // =========================================================================
 
 function renderChatInput(username) {
@@ -259,12 +249,13 @@ function sendMessageToFirebase(author, text) {
     });
 }
 
+// Чтение и рендеринг последних 50 сообщений в чате
 database.ref('messages').orderByChild('timestamp').limitToLast(50).on('value', function(snapshot) {
     chatMessages.innerHTML = '';
     
     const data = snapshot.val();
     if (!data) {
-        chatMessages.innerHTML = `<div class="chat-guest-prompt" style="margin-top: 100px;">Здесь пока нет сообщений. Будьте первыми!</div>`;
+        chatMessages.innerHTML = `<div class="chat-guest-prompt" style="margin-top: 100px; border:none; background:none;">Здесь пока нет сообщений. Будьте первыми!</div>`;
         return;
     }
 
@@ -282,9 +273,11 @@ database.ref('messages').orderByChild('timestamp').limitToLast(50).on('value', f
         chatMessages.appendChild(messageElement);
     });
 
+    // Автоматическая прокрутка чата вниз при получении сообщений
     chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
+// Защита от XSS-уязвимостей (вредоносных кодов в чате)
 function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, 
         tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
@@ -292,7 +285,7 @@ function escapeHTML(str) {
 }
 
 // =========================================================================
-// 5. ИНТЕРАКТИВНЫЙ БЛОК FAQ (АККОРДЕОН)
+// 6. МОДУЛЬ АККОРДЕОНА FAQ (ВОПРОСЫ И ОТВЕТЫ)
 // =========================================================================
 const faqQuestions = document.querySelectorAll('.faq-question');
 
@@ -302,11 +295,13 @@ faqQuestions.forEach(question => {
         const answer = item.querySelector('.faq-answer');
         const isActive = item.classList.contains('active');
 
+        // Закрываем все остальные открытые вкладки FAQ
         document.querySelectorAll('.faq-item').forEach(otherItem => {
             otherItem.classList.remove('active');
             otherItem.querySelector('.faq-answer').style.maxHeight = null;
         });
 
+        // Открываем текущую вкладку плавно по высоте текста
         if (!isActive) {
             item.classList.add('active');
             answer.style.maxHeight = answer.scrollHeight + "px";
@@ -314,6 +309,7 @@ faqQuestions.forEach(question => {
     });
 });
 
+// Дополнительные обработчики закрытия модального окна
 closeBtn.addEventListener('click', closeModal);
 window.addEventListener('click', function(e) {
     if (e.target === authModal) {
@@ -321,5 +317,5 @@ window.addEventListener('click', function(e) {
     }
 });
 
-// Проверяем авторизацию при первой загрузке страницы
+// Старт проверки состояния входа
 checkUserLogin();
