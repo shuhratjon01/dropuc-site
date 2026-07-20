@@ -1,9 +1,9 @@
 /**
  * =========================================================================
- * dropuc-sait — Официальный скрипт сайта Dropuc
+ * dropuc-sait — Официальный скрипт сайта Dropuc (Обновленная версия)
  * Разработчики: Dropuc & Партнер программиста
- * Назначение: Защищенная авторизация по паролю в облаке Firebase,
- * реальный онлайн-чат и интерактивный блок FAQ.
+ * Назначение: Защищенная авторизация, real-time чат, интерактивный FAQ,
+ * управление стеклянными вкладками и адаптивным мобильным меню.
  * =========================================================================
  */
 
@@ -41,9 +41,68 @@ const successMessage = document.getElementById('successMessage');
 
 const chatMessages = document.getElementById('chatMessages');
 const chatInputArea = document.getElementById('chatInputArea');
-const scrollToChatBtn = document.getElementById('scrollToChat');
-const chatBlock = document.getElementById('chatBlock');
 const submitBtn = document.getElementById('submitBtn');
+
+// Новые элементы для логики вкладок и мобильного меню
+const navItems = document.querySelectorAll('.nav-item');
+const tabContents = document.querySelectorAll('.tab-content');
+const sidebarMenu = document.getElementById('sidebarMenu');
+const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+const closeMobileMenu = document.getElementById('closeMobileMenu');
+const switchToChatBtn = document.getElementById('switchToChatBtn');
+
+// =========================================================================
+// 新. УПРАВЛЕНИЕ ВКЛАДКАМИ (ТАБЫ) И МОБИЛЬНЫМ МЕНЮ
+// =========================================================================
+
+// Функция для активации нужной вкладки по её ID
+function switchTab(tabId) {
+    // 1. Скрываем все вкладки контента
+    tabContents.forEach(tab => tab.classList.remove('active'));
+    
+    // 2. Снимаем активный класс со всех кнопок в меню
+    navItems.forEach(item => item.classList.remove('active'));
+
+    // 3. Показываем нужную вкладку
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) targetTab.classList.add('active');
+
+    // 4. Подсвечиваем соответствующую кнопку в меню
+    const targetNavItem = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
+    if (targetNavItem) targetNavItem.classList.add('active');
+}
+
+// Слушатель кликов по элементам бокового меню
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const targetTabId = item.getAttribute('data-tab');
+        switchTab(targetTabId);
+        
+        // На мобильных устройствах закрываем шторку меню после выбора раздела
+        sidebarMenu.classList.remove('open');
+    });
+});
+
+// Дополнительная кнопка "Перейти в чатик" внутри вкладки "О себе"
+if (switchToChatBtn) {
+    switchToChatBtn.addEventListener('click', () => {
+        switchTab('chat-tab');
+    });
+}
+
+// Логика открытия и закрытия шторки меню на телефонах
+if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', () => {
+        sidebarMenu.classList.add('open');
+    });
+}
+
+if (closeMobileMenu) {
+    closeMobileMenu.addEventListener('click', () => {
+        sidebarMenu.classList.remove('open');
+    });
+}
+
 
 // =========================================================================
 // 3. ЛОГИКА ЗАЩИЩЕННОЙ АВТОРИЗАЦИИ (ОБЛАЧНАЯ ПРОВЕРКА ПАРОЛЕЙ)
@@ -80,7 +139,6 @@ function logout() {
     checkUserLogin();
 }
 
-// Защищенная авторизация и регистрация через облако Firebase
 regForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -103,14 +161,11 @@ regForm.addEventListener('submit', function(e) {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Проверка...';
 
-    // Запрашиваем информацию о пользователе из ветки "users" в Firebase
     database.ref('users/' + username).once('value').then((snapshot) => {
         const userData = snapshot.val();
 
         if (userData) {
-            // Пользователь существует -> проверяем пароль
             if (userData.password === password) {
-                // Пароль верный -> Успешный вход!
                 successMessage.textContent = 'Успешный вход под ником ' + username + '!';
                 successMessage.style.display = 'block';
                 localStorage.setItem('registeredUser', username);
@@ -122,13 +177,11 @@ regForm.addEventListener('submit', function(e) {
                     submitBtn.textContent = 'Войти / Создать';
                 }, 1500);
             } else {
-                // Пароль неверный!
                 showError('Этот ник занят! Неверный пароль.');
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Войти / Создать';
             }
         } else {
-            // Пользователь не существует -> Регистрируем новый ник в облаке!
             database.ref('users/' + username).set({
                 password: password
             }).then(() => {
@@ -238,10 +291,6 @@ function escapeHTML(str) {
     );
 }
 
-scrollToChatBtn.addEventListener('click', () => {
-    chatBlock.scrollIntoView({ behavior: 'smooth' });
-});
-
 // =========================================================================
 // 5. ИНТЕРАКТИВНЫЙ БЛОК FAQ (АККОРДЕОН)
 // =========================================================================
@@ -272,4 +321,5 @@ window.addEventListener('click', function(e) {
     }
 });
 
+// Проверяем авторизацию при первой загрузке страницы
 checkUserLogin();
