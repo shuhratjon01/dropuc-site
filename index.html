@@ -6,19 +6,19 @@
     <title>Dropuc — Официальный сайт</title>
     <!-- Подключение стилей -->
     <link rel="stylesheet" href="style.css">
-    <!-- Современный шрифт Inter -->
+    <!-- Подключение шрифта Inter для премиального вида -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Задний план: Анимированные жидкие сферы для создания эффекта свечения сквозь стекло -->
+    <!-- ЗАДНИЙ ПЛАН: Плавающие неоновые сферы жидкого стекла -->
     <div class="glass-bg-container">
         <div class="glass-sphere sphere-emerald"></div>
         <div class="glass-sphere sphere-teal"></div>
         <div class="glass-sphere sphere-purple"></div>
     </div>
 
-    <!-- Мобильная шапка: видна только на телефонах -->
+    <!-- МОБИЛЬНАЯ ШАПКА: Отображается только на смартфонах -->
     <div class="mobile-header">
         <div class="logo">
             <img src="https://drive.google.com/uc?export=view&id=1lLmFNZZcRe6i6pkYUzOcJBGdOSVMqnk8" alt="D" class="logo-img">
@@ -27,11 +27,12 @@
         <button id="mobileMenuToggle" class="mobile-menu-toggle">☰ Меню</button>
     </div>
 
-    <!-- Главный каркас приложения: левое меню + основной контент -->
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР САЙТА -->
     <div class="app-container">
         
-        <!-- ЛЕВАЯ ПАНЕЛЬ НАВИГАЦИИ (САЙДБАР) -->
+        <!-- БОКОВАЯ ПАНЕЛЬ НАВИГАЦИИ (САЙДБАР) -->
         <aside class="sidebar" id="sidebarMenu">
+            <!-- Кнопка закрытия для мобильной шторки -->
             <button id="closeMobileMenu" class="close-mobile-menu">&times;</button>
             
             <div class="sidebar-top">
@@ -39,10 +40,11 @@
                     <img src="https://drive.google.com/uc?export=view&id=1lLmFNZZcRe6i6pkYUzOcJBGdOSVMqnk8" alt="D" class="logo-img">
                     <span>Dropuc</span>
                 </div>
+                <!-- Статус авторизации пользователя -->
                 <span id="userStatus" class="user-status">Привет, Гость!</span>
             </div>
 
-            <!-- Интерактивное меню переключения вкладок (Вариант А) -->
+            <!-- Меню переключения разделов сайта -->
             <nav class="sidebar-nav">
                 <button class="nav-item active" data-tab="about-tab">👤 Обо мне</button>
                 <button class="nav-item" data-tab="chat-tab">💬 Комната общения</button>
@@ -54,29 +56,48 @@
             </div>
         </aside>
 
-        <!-- ОСНОВНОЙ КОНТЕНТ (Окна меняются в зависимости от выбранной вкладки) -->
+        <!-- ГЛАВНАЯ ОБЛАСТЬ ВЫВОДА КОНТЕНТА -->
         <main class="main-content">
             
-            <!-- ВКЛАДКА 1: ОБО МНЕ (Активна по умолчанию) -->
+            <!-- ВКЛАДКА: ОБО МНЕ (С внутренней плавной прокруткой текста) -->
             <section class="tab-content active" id="about-tab">
                 <div class="glass-card about-card">
-                    <div class="badge">Канал Dropuc</div>
-                    <h1>Добро пожаловать на мой сайт!</h1>
-                    <p class="about-text">
-                        Привет! Меня зовут Dropuc. Я создаю классный и увлекательный контент по Майнкрафту! 
-                        Здесь ты сможешь следить за развитием канала, узнавать свежие новости и стать частью нашего крутого комьюнити.
-                    </p>
-                    <div class="about-placeholder-box">
-                        <p class="placeholder-title">✨ Место для твоего нового текста</p>
-                        <p>Как только ты пришлешь мне свой текст, мы сразу вставим его сюда вместо этого блока!</p>
-                    </div>
-                    <div class="minecraft-decor">
-                        <span class="chat-badge-link" id="switchToChatBtn">💬 Перейти в чатик</span>
+                    <div class="badge">История канала Dropuc</div>
+                    <h1>Мой путь в Майнкрафте</h1>
+                    
+                    <!-- Контейнер с прокруткой -->
+                    <div class="about-scroll-container">
+                        <p class="about-paragraph">
+                            Привет! Я — <span class="highlight-text">Dropuc</span>, и это история моего канала. В 2025 году я запустил свой первый проект. Всё шло отлично: просмотры росли, Майнкрафт затягивал. Но по незнанию я совершил классическую ошибку — решил снимать Shorts на английском языке.
+                        </p>
+                        
+                        <p class="about-paragraph">
+                            На канал пришло около <span class="highlight-text">200 иностранных подписчиков</span>, и тут алгоритмы YouTube сыграли со мной злую шутку. Когда я выпускал длинные ролики на русском языке, Ютуб в первую очередь тестировал их на англоязычных подписчиках. Они не понимали ни слова, просто пролистывали видео, и алгоритм намертво душил просмотры, считая контент неинтересным.
+                        </p>
+                        
+                        <p class="about-paragraph">
+                            Я пытался вывезти тот канал целый год. Это был жесткий, но важнейший опыт. Я не бросил дело, а сел, досконально разобрался в логике алгоритмов и понял, как устроена эта система. Усвоив все уроки, <span class="highlight-text">13 июля 2026 года</span> я с нуля создал новый канал <strong class="channel-name">DropucMC</strong>.
+                        </p>
+                        
+                        <p class="about-paragraph">
+                            Чистая карма алгоритмов, только целевая аудитория и накопленный за год опыт. Результат всего за 6 дней говорит сам за себя: <span class="highlight-text">более 700 честных просмотров</span>, первые <span class="highlight-text">11 живых русскоязычных подписчиков</span> и более <span class="highlight-text">11 часов</span> суммарного времени просмотра.
+                        </p>
+                        
+                        <p class="about-paragraph">
+                            Это только начало. Здесь не будет фальши — только качественное, уютное и атмосферное выживание в Майнкрафте от человека, который знает своё дело. Добро пожаловать в команду!
+                        </p>
+
+                        <!-- Неоновая кнопка подписки -->
+                        <div class="about-actions">
+                            <a href="https://www.youtube.com/@DropucMC" target="_blank" class="btn btn-youtube">
+                                🔴 Подписаться на DropucMC
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ВКЛАДКА 2: ЧАТ С FIREBASE -->
+            <!-- ВКЛАДКА: FIREBASE ОНЛАЙН ЧАТ -->
             <section class="tab-content" id="chat-tab">
                 <div class="glass-card chat-section" id="chatBlock">
                     <div class="chat-header">
@@ -84,15 +105,15 @@
                         <span class="chat-online">Онлайн сеть (Firebase)</span>
                     </div>
                     
-                    <!-- Сюда JavaScript добавляет сообщения -->
+                    <!-- Список сообщений -->
                     <div id="chatMessages" class="chat-messages"></div>
 
-                    <!-- Сюда JavaScript добавляет форму отправки или плашку гостя -->
+                    <!-- Интерактивная зона ввода (Управляется через JS) -->
                     <div id="chatInputArea" class="chat-input-area"></div>
                 </div>
             </section>
 
-            <!-- ВКЛАДКА 3: FAQ (АККОРДЕОН) -->
+            <!-- ВКЛАДКА: ИНТЕРАКТИВНЫЙ FAQ (АККОРДЕОН) -->
             <section class="tab-content" id="faq-tab">
                 <div class="faq-section">
                     <h2 class="faq-title">Часто задаваемые вопросы</h2>
@@ -147,7 +168,7 @@
         </main>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО АВТОРИЗАЦИИ (Тоже в стиле жидкого стекла) -->
+    <!-- МОДАЛЬНОЕ ОКНО ДЛЯ ВХОДА И РЕГИСТРАЦИИ -->
     <div id="authModal" class="modal">
         <div class="modal-content glass-card">
             <span class="close-btn">&times;</span>
@@ -173,11 +194,11 @@
         </div>
     </div>
 
-    <!-- Загрузка скриптов Google Firebase (Realtime Database v8) -->
+    <!-- Загрузка скриптов Google Firebase SDK (v8.10.1) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
-    <!-- Основной рабочий файл логики -->
+    <!-- Основной логический файл сайта -->
     <script src="script.js"></script>
 </body>
 </html>
