@@ -4,105 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dropuc — Официальный сайт</title>
+    <!-- Подключение стилей -->
     <link rel="stylesheet" href="style.css">
+    <!-- Современный шрифт Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header class="header">
-        <div class="container header-container">
-            <div class="logo">
-                <img src="https://drive.google.com/uc?export=view&id=1lLmFNZZcRe6i6pkYUzOcJBGdOSVMqnk8" alt="D" class="logo-img">
-                <span>Dropuc</span>
-            </div>
-            <nav class="nav">
-                <span id="userStatus" class="user-status">Привет, Гость!</span>
-                <button id="openAuthBtn" class="btn btn-primary">Войти в аккаунт</button>
-            </nav>
+    <!-- Задний план: Анимированные жидкие сферы для создания эффекта свечения сквозь стекло -->
+    <div class="glass-bg-container">
+        <div class="glass-sphere sphere-emerald"></div>
+        <div class="glass-sphere sphere-teal"></div>
+        <div class="glass-sphere sphere-purple"></div>
+    </div>
+
+    <!-- Мобильная шапка: видна только на телефонах -->
+    <div class="mobile-header">
+        <div class="logo">
+            <img src="https://drive.google.com/uc?export=view&id=1lLmFNZZcRe6i6pkYUzOcJBGdOSVMqnk8" alt="D" class="logo-img">
+            <span>Dropuc</span>
         </div>
-    </header>
+        <button id="mobileMenuToggle" class="mobile-menu-toggle">☰ Меню</button>
+    </div>
 
-    <main class="main-content container">
+    <!-- Главный каркас приложения: левое меню + основной контент -->
+    <div class="app-container">
         
-        <section class="about-card">
-            <div class="badge">Канал Dropuc</div>
-            <h1>Добро пожаловать на мой сайт!</h1>
-            <p class="about-text">
-                Привет! Меня зовут Dropuc. Я создаю классный и увлекательный контент по Майнкрафту! 
-                Здесь ты сможешь следить за развитием канала, узнавать свежие новости и стать частью нашего крутого комьюнити. 
-                Регистрируйся прямо сейчас, чтобы не пропускать ничего интересного!
-            </p>
-            <div class="minecraft-decor">
-                <span class="chat-badge-link" id="scrollToChat">💬 Открыть чатик</span>
-            </div>
-        </section>
-
-        <section class="chat-section" id="chatBlock">
-            <div class="chat-header">
-                <h3>Комната общения</h3>
-                <span class="chat-online">Онлайн сеть (Firebase)</span>
-            </div>
+        <!-- ЛЕВАЯ ПАНЕЛЬ НАВИГАЦИИ (САЙДБАР) -->
+        <aside class="sidebar" id="sidebarMenu">
+            <button id="closeMobileMenu" class="close-mobile-menu">&times;</button>
             
-            <div id="chatMessages" class="chat-messages">
+            <div class="sidebar-top">
+                <div class="logo">
+                    <img src="https://drive.google.com/uc?export=view&id=1lLmFNZZcRe6i6pkYUzOcJBGdOSVMqnk8" alt="D" class="logo-img">
+                    <span>Dropuc</span>
                 </div>
-
-            <div id="chatInputArea" class="chat-input-area">
-                </div>
-        </section>
-
-        <section class="faq-section">
-            <h2 class="faq-title">Часто задаваемые вопросы</h2>
-            
-            <div class="faq-container">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>На какой версии Майнкрафта ты играешь?</span>
-                        <span class="faq-arrow">▼</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>В основном я играю на версии 1.21.11, используя Fabric для лучшей оптимизации и работы модов.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Какие шейдеры ты используешь в своих видео?</span>
-                        <span class="faq-arrow">▼</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Я обожаю легкие и стильные шейдеры! Мой главный выбор — <strong>Miniature Shader</strong>. Они отлично выглядят и не лагают. Вы можете скачать любую версию по кнопке ниже:</p>
-                        <a href="https://modrinth.com/shader/miniature-shader/versions" target="_blank" class="btn btn-download">
-                            ⚡ Скачать Miniature Shader на Modrinth
-                        </a>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Когда первый стрим?</span>
-                        <span class="faq-arrow">▼</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Стримы планируются! Я запущу свой первый стрим (пока без лица), как только наш канал Dropuc преодолеет отметку в 1500 подписчиков. Обязательно подписывайся, чтобы не пропустить этот момент!</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Как часто выходят новые ролики?</span>
-                        <span class="faq-arrow">▼</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Я стараюсь делать контент регулярно. Новые видео выходят, как только они полностью готовы, смонтированы и доведены до идеала!</p>
-                    </div>
-                </div>
+                <span id="userStatus" class="user-status">Привет, Гость!</span>
             </div>
-        </section>
 
-    </main>
+            <!-- Интерактивное меню переключения вкладок (Вариант А) -->
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-tab="about-tab">👤 Обо мне</button>
+                <button class="nav-item" data-tab="chat-tab">💬 Комната общения</button>
+                <button class="nav-item" data-tab="faq-tab">❓ Частые вопросы</button>
+            </nav>
 
+            <div class="sidebar-bottom">
+                <button id="openAuthBtn" class="btn btn-primary">Войти в аккаунт</button>
+            </div>
+        </aside>
+
+        <!-- ОСНОВНОЙ КОНТЕНТ (Окна меняются в зависимости от выбранной вкладки) -->
+        <main class="main-content">
+            
+            <!-- ВКЛАДКА 1: ОБО МНЕ (Активна по умолчанию) -->
+            <section class="tab-content active" id="about-tab">
+                <div class="glass-card about-card">
+                    <div class="badge">Канал Dropuc</div>
+                    <h1>Добро пожаловать на мой сайт!</h1>
+                    <p class="about-text">
+                        Привет! Меня зовут Dropuc. Я создаю классный и увлекательный контент по Майнкрафту! 
+                        Здесь ты сможешь следить за развитием канала, узнавать свежие новости и стать частью нашего крутого комьюнити.
+                    </p>
+                    <div class="about-placeholder-box">
+                        <p class="placeholder-title">✨ Место для твоего нового текста</p>
+                        <p>Как только ты пришлешь мне свой текст, мы сразу вставим его сюда вместо этого блока!</p>
+                    </div>
+                    <div class="minecraft-decor">
+                        <span class="chat-badge-link" id="switchToChatBtn">💬 Перейти в чатик</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ВКЛАДКА 2: ЧАТ С FIREBASE -->
+            <section class="tab-content" id="chat-tab">
+                <div class="glass-card chat-section" id="chatBlock">
+                    <div class="chat-header">
+                        <h3>Комната общения</h3>
+                        <span class="chat-online">Онлайн сеть (Firebase)</span>
+                    </div>
+                    
+                    <!-- Сюда JavaScript добавляет сообщения -->
+                    <div id="chatMessages" class="chat-messages"></div>
+
+                    <!-- Сюда JavaScript добавляет форму отправки или плашку гостя -->
+                    <div id="chatInputArea" class="chat-input-area"></div>
+                </div>
+            </section>
+
+            <!-- ВКЛАДКА 3: FAQ (АККОРДЕОН) -->
+            <section class="tab-content" id="faq-tab">
+                <div class="faq-section">
+                    <h2 class="faq-title">Часто задаваемые вопросы</h2>
+                    
+                    <div class="faq-container">
+                        <div class="glass-card faq-item">
+                            <button class="faq-question">
+                                <span>На какой версии Майнкрафта ты играешь?</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>В основном я играю на версии 1.21.11, используя Fabric для лучшей оптимизации и работы модов.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card faq-item">
+                            <button class="faq-question">
+                                <span>Какие шейдеры ты используешь в своих видео?</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Я обожаю легкие и стильные шейдеры! Мой главный выбор — <strong>Miniature Shader</strong>. Они отлично выглядят и не лагают. Вы можете скачать любую версию по кнопке ниже:</p>
+                                <a href="https://modrinth.com/shader/miniature-shader/versions" target="_blank" class="btn btn-download">
+                                    ⚡ Скачать Miniature Shader на Modrinth
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="glass-card faq-item">
+                            <button class="faq-question">
+                                <span>Когда первый стрим?</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Стримы планируются! Я запущу свой первый стрим (пока без лица), как только наш канал Dropuc преодолеет отметку в 1500 подписчиков. Обязательно подписывайся, чтобы не пропустить этот момент!</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card faq-item">
+                            <button class="faq-question">
+                                <span>Как часто выходят новые ролики?</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Я стараюсь делать контент регулярно. Новые видео выходят, как только они полностью готовы, смонтированы и доведены до идеала!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО АВТОРИЗАЦИИ (Тоже в стиле жидкого стекла) -->
     <div id="authModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content glass-card">
             <span class="close-btn">&times;</span>
             <h2 id="modalTitle">Вход / Регистрация</h2>
             <p class="modal-subtitle">Введите ник и пароль. Если ника нет в базе — он создастся автоматически.</p>
@@ -126,9 +173,11 @@
         </div>
     </div>
 
+    <!-- Загрузка скриптов Google Firebase (Realtime Database v8) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
+    <!-- Основной рабочий файл логики -->
     <script src="script.js"></script>
 </body>
 </html>
