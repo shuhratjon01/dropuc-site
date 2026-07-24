@@ -1,6 +1,3 @@
-/* =========================================================================
-   1. ОБЩИЕ СБРОСЫ И БАЗОВЫЕ НАСТРОЙКИ СТИЛЕЙ
-   ========================================================================= */
 * {
     margin: 0;
     padding: 0;
@@ -9,22 +6,17 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #060913; /* Глубокий темный фон для сочности свечения */
+    background-color: #060913;
     color: #f8fafc;
     line-height: 1.6;
     overflow-x: hidden;
     min-height: 100vh;
 }
 
-/* =========================================================================
-   2. ЖИДКОЕ СТЕКЛО (LIQUID GLASS EFFECT) — СФЕРЫ НА ФОНЕ
-   ========================================================================= */
 .glass-bg-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     z-index: -1;
     overflow: hidden;
 }
@@ -32,546 +24,115 @@ body {
 .glass-sphere {
     position: absolute;
     border-radius: 50%;
-    filter: blur(90px); /* Мягкое размытие краев жидких капель */
+    filter: blur(90px);
     opacity: 0.45;
     animation: float 25px infinite alternate ease-in-out;
 }
 
-.sphere-emerald {
-    width: 450px;
-    height: 450px;
-    background: radial-gradient(circle, #00e676 0%, rgba(0,230,118,0) 70%);
-    top: -10%;
-    right: 10%;
-    animation-duration: 20s;
-}
+.sphere-emerald { width: 450px; height: 450px; background: radial-gradient(circle, #00e676 0%, rgba(0,230,118,0) 70%); top: -10%; right: 10%; }
+.sphere-teal { width: 500px; height: 500px; background: radial-gradient(circle, #2dd4bf 0%, rgba(45,212,191,0) 70%); bottom: -5%; left: 15%; }
+.sphere-purple { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7 0%, rgba(168,85,247,0) 70%); top: 40%; right: 35%; }
 
-.sphere-teal {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, #2dd4bf 0%, rgba(45,212,191,0) 70%);
-    bottom: -5%;
-    left: 15%;
-    animation-duration: 25s;
-}
-
-.sphere-purple {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, #a855f7 0%, rgba(168,85,247,0) 70%);
-    top: 40%;
-    right: 35%;
-    animation-duration: 18s;
-}
-
-/* Плавная плавающая анимация */
 @keyframes float {
-    0% { transform: translateY(0) scale(1) translateX(0); }
-    100% { transform: translateY(-40px) scale(1.08) translateX(30px); }
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-40px) scale(1.08); }
 }
 
-/* ГЛАВНЫЙ КЛАСС GLASSMORPHISM */
 .glass-card {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.12); /* Блик стеклянного ребра */
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
-/* =========================================================================
-   3. СЕТКА ПРИЛОЖЕНИЯ И ВЕРСТКА СТРАНИЦЫ
-   ========================================================================= */
 .app-container {
     display: grid;
     grid-template-columns: 280px 1fr;
     min-height: 100vh;
 }
 
-.mobile-header {
-    display: none; /* Скрыто на компьютерах */
-}
+.mobile-header { display: none; }
 
-/* БОКОВАЯ ПАНЕЛЬ НАВИГАЦИИ */
 .sidebar {
     background: rgba(10, 15, 30, 0.4);
     backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
     border-right: 1px solid rgba(255, 255, 255, 0.08);
     padding: 40px 24px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: fixed;
-    width: 280px;
-    height: 100vh;
-    left: 0;
-    top: 0;
+    width: 280px; height: 100vh;
+    left: 0; top: 0;
     z-index: 90;
 }
 
-.close-mobile-menu {
-    display: none;
-}
-
-.sidebar-top {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 700;
-    font-size: 24px;
-    background: linear-gradient(135deg, #4ade80, #2dd4bf); 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.logo-img {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #00e676;
-    box-shadow: 0 0 12px rgba(0, 230, 118, 0.5);
-}
-
-.user-status {
-    font-size: 13px;
-    color: #94a3b8;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 6px 12px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.sidebar-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 40px 0;
-}
-
+.sidebar-nav { display: flex; flex-direction: column; gap: 12px; margin: 40px 0; }
 .nav-item {
-    background: none;
-    border: 1px solid transparent;
-    color: #94a3b8;
-    padding: 14px 18px;
-    border-radius: 14px;
-    text-align: left;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: none; border: 1px solid transparent; color: #94a3b8;
+    padding: 14px 18px; border-radius: 14px; text-align: left;
+    font-size: 15px; font-weight: 600; cursor: pointer;
 }
-
-.nav-item:hover {
-    color: #f8fafc;
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.05);
-}
-
 .nav-item.active {
-    color: #0b0f19;
-    background: linear-gradient(135deg, #4ade80, #2dd4bf);
-    border-color: transparent;
-    box-shadow: 0 8px 20px rgba(74, 222, 128, 0.3);
+    color: #0b0f19; background: linear-gradient(135deg, #4ade80, #2dd4bf);
 }
 
-/* =========================================================================
-   4. ГЛАВНАЯ ЗОНА ОТОБРАЖЕНИЯ И СКРЫТИЕ ВКЛАДОК
-   ========================================================================= */
 .main-content {
-    grid-column: 2;
-    padding: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Центровка контента для стиля iOS приложений */
-    margin-left: 280px;
-    height: 100vh;
-    overflow: hidden; /* Отключаем прокрутку всего сайта на ПК */
+    grid-column: 2; padding: 40px;
+    display: flex; justify-content: center; align-items: center;
+    margin-left: 280px; height: 100vh; overflow: hidden;
 }
 
-.tab-content {
-    display: none; /* По умолчанию разделы полностью невидимы */
-    width: 100%;
-    max-width: 720px;
-    animation: fadeInTab 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
+.tab-content { display: none; width: 100%; max-width: 720px; }
+.tab-content.active { display: block; }
 
-.tab-content.active {
-    display: block; /* Показывается только активная вкладка */
-}
+/* ОБО МНЕ */
+.about-card, .profile-card, .shop-card { padding: 40px; width: 100%; max-height: 85vh; display: flex; flex-direction: column; }
+.about-scroll-container { overflow-y: auto; scroll-behavior: smooth; padding-right: 15px; flex-grow: 1; }
+.about-paragraph { color: #cbd5e1; font-size: 15.5px; line-height: 1.8; margin-bottom: 20px; }
+.highlight-text { color: #4ade80; font-weight: 600; }
 
-@keyframes fadeInTab {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+/* ЧАТ */
+.chat-section { padding: 30px; width: 100%; }
+.chat-header { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 15px; }
+.chat-online { font-size: 12px; background: rgba(74,222,128,0.1); color: #4ade80; padding: 4px 12px; border-radius: 20px; }
+.chat-messages { height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; margin: 20px 0; }
+.message { background: rgba(255,255,255,0.02); padding: 12px 16px; border-radius: 16px; align-self: flex-start; max-width: 85%; }
+.message-author { font-weight: 600; color: #4ade80; margin-right: 12px; }
+.message-avatar-wrap { position: relative; display: inline-block; width: 30px; height: 30px; vertical-align: middle; margin-right: 8px; }
+.message-avatar { width: 100%; height: 100%; border-radius: 50%; }
 
-/* =========================================================================
-   5. СТИЛИЗАЦИЯ ВКЛАДКИ "ОБО МНЕ" С СКРОЛЛОМ
-   ========================================================================= */
-.about-card {
-    padding: 40px;
-    width: 100%;
-    max-height: 85vh; /* Ограничиваем карту по высоте на ПК */
-    display: flex;
-    flex-direction: column;
-}
+/* ПРОФИЛЬ И МАГАПЗИН */
+.avatar-preview-container { position: relative; width: 80px; height: 80px; }
+.profile-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.avatar-frame-overlay { position: absolute; top: -10%; left: -10%; width: 120%; height: 120%; pointer-events: none; }
+.user-info-summary { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+.divider { border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 20px 0; }
 
-.badge {
-    display: inline-block;
-    background: rgba(74, 222, 128, 0.08);
-    color: #4ade80;
-    padding: 6px 16px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    border: 1px solid rgba(74, 222, 128, 0.2);
-    align-self: flex-start;
-}
+.avatar-gallery { display: flex; gap: 15px; margin: 15px 0 25px 0; }
+.avatar-option { width: 55px; height: 55px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; }
+.avatar-option.selected { border-color: #4ade80; transform: scale(1.1); }
 
-.about-card h1 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    background: linear-gradient(135deg, #ffffff, #cbd5e1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+.shop-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.xp-badge { background: rgba(74, 222, 128, 0.15); color: #4ade80; padding: 8px 16px; border-radius: 20px; font-weight: 700; }
+.shop-subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+.shop-item { padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.shop-item-img-wrap { width: 90px; height: 90px; margin-bottom: 15px; }
+.shop-item-frame { width: 100%; height: 100%; object-fit: contain; }
+.shop-item-price { color: #4ade80; font-weight: 700; margin: 10px 0 15px 0; }
 
-/* КОНТЕЙНЕР ДЛЯ ВНУТРЕННЕЙ ПРОКРУТКИ ТЕКСТА */
-.about-scroll-container {
-    overflow-y: auto;
-    scroll-behavior: smooth;
-    padding-right: 15px;
-    flex-grow: 1;
-}
+.btn { font-family: 'Inter', sans-serif; font-weight: 600; padding: 12px 24px; border-radius: 12px; border: none; cursor: pointer; }
+.btn-primary, .btn-submit { background: linear-gradient(135deg, #4ade80, #2dd4bf); color: #0b0f19; }
 
-.about-paragraph {
-    color: #cbd5e1;
-    font-size: 15.5px;
-    line-height: 1.8;
-    margin-bottom: 20px;
-    text-align: justify;
-}
-
-/* Неоновые текстовые маркеры */
-.highlight-text {
-    color: #4ade80;
-    font-weight: 600;
-    text-shadow: 0 0 10px rgba(74, 222, 128, 0.25);
-}
-
-.channel-name {
-    color: #2dd4bf;
-    font-weight: 700;
-}
-
-.about-actions {
-    margin-top: 25px;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-/* Кнопка YouTube */
-.btn-youtube {
-    display: inline-block;
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    color: #ffffff;
-    text-decoration: none;
-    padding: 14px 28px;
-    border-radius: 14px;
-    font-weight: 600;
-    font-size: 15px;
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
-    transition: all 0.3s ease;
-}
-
-.btn-youtube:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.45);
-    filter: brightness(1.1);
-}
-
-/* Тонкий стеклянный ползунок прокрутки */
-.about-scroll-container::-webkit-scrollbar {
-    width: 6px;
-}
-.about-scroll-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.01);
-    border-radius: 10px;
-}
-.about-scroll-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-.about-scroll-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(74, 222, 128, 0.4);
-}
-
-/* =========================================================================
-   6. ОБЩИЕ СТИЛИ КНОПОК И ФОРМ
-   ========================================================================= */
-.btn {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    padding: 12px 24px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #4ade80, #2dd4bf);
-    color: #0b0f19;
-    width: 100%;
-}
-
-.btn-primary:hover {
-    box-shadow: 0 8px 25px rgba(74, 222, 128, 0.35);
-}
-
-/* СТИЛИ ОНЛАЙН ЧАТА */
-.chat-section {
-    padding: 30px;
-    width: 100%;
-}
-
-.chat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 15px;
-}
-
-.chat-online {
-    font-size: 12px;
-    background: rgba(74, 222, 128, 0.1);
-    color: #4ade80;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-weight: 500;
-}
-
-.chat-messages {
-    height: 380px;
-    overflow-y: auto;
-    padding-right: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.chat-messages::-webkit-scrollbar { width: 5px; }
-.chat-messages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-
-.message {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 12px 16px;
-    border-radius: 16px;
-    align-self: flex-start;
-    max-width: 85%;
-}
-
-.message-author { font-weight: 600; color: #4ade80; margin-right: 12px;}
-.message-time { color: #64748b; font-size: 11px; }
-.message-text { color: #e2e8f0; margin-top: 4px; font-size: 14.5px; word-break: break-word; }
-
-.chat-form {
-    display: flex;
-    gap: 10px;
-}
-
-.chat-input {
-    flex-grow: 1;
-    background-color: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 14px 18px;
-    border-radius: 12px;
-    color: #f8fafc;
-    outline: none;
-}
-.chat-input:focus { border-color: #4ade80; }
-
-.btn-send {
-    background: linear-gradient(135deg, #4ade80, #2dd4bf);
-    color: #0b0f19;
-    padding: 0 24px;
-    font-weight: 600;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-}
-
-.chat-guest-prompt {
-    text-align: center;
-    color: #94a3b8;
-    font-size: 14px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 12px;
-    border: 1px dashed rgba(255, 255, 255, 0.1);
-}
-
-#chatRegLink {
-    color: #4ade80;
-    text-decoration: underline;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-/* =========================================================================
-   7. СТИЛИ ДЛЯFAQ (АККОРДЕОН)
-   ========================================================================= */
-.faq-title {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 30px;
-    background: linear-gradient(135deg, #ffffff, #94a3b8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.faq-container { display: flex; flex-direction: column; gap: 15px; width: 100%; }
-.faq-item { overflow: hidden; transition: all 0.3s ease; }
-.faq-item:hover { border-color: rgba(74, 222, 128, 0.3); }
-
-.faq-question {
-    width: 100%; background: none; border: none; padding: 20px;
-    display: flex; justify-content: space-between; align-items: center;
-    color: #f8fafc; font-size: 16px; font-weight: 600; cursor: pointer;
-    text-align: left; font-family: 'Inter', sans-serif;
-}
-
-.faq-arrow { font-size: 12px; color: #64748b; transition: transform 0.3s; }
-.faq-item.active .faq-arrow { transform: rotate(180deg); color: #4ade80; }
-.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 20px; color: #94a3b8; font-size: 14.5px; }
-.faq-item.active .faq-answer { padding-bottom: 20px; }
-
-.btn-download {
-    display: inline-block; margin-top: 15px;
-    background: linear-gradient(135deg, #059669, #10b981);
-    color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 12px;
-    font-size: 14px; font-weight: 600;
-}
-
-/* МОДАЛЬНЫЕ ОКНА */
-.modal {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(4, 6, 12, 0.7); backdrop-filter: blur(12px);
-    justify-content: center; align-items: center; z-index: 200;
-}
+/* МОДАЛКА */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4,6,12,0.7); backdrop-filter: blur(12px); justify-content: center; align-items: center; z-index: 200; }
 .modal-content { width: 90%; max-width: 420px; padding: 40px 30px; position: relative; }
-.close-btn { position: absolute; top: 20px; right: 20px; font-size: 28px; color: #64748b; cursor: pointer; }
-.modal-subtitle { font-size: 13px; color: #64748b; margin-bottom: 25px; }
+.close-btn { position: absolute; top: 20px; right: 20px; font-size: 28px; cursor: pointer; }
 .input-group { margin-bottom: 20px; }
 .input-group label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 8px; }
-.input-group input { width: 100%; background-color: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 16px; border-radius: 10px; color: #f8fafc; outline: none; }
-.input-group input:focus { border-color: #4ade80; }
-.btn-submit { width: 100%; background: linear-gradient(135deg, #4ade80, #2dd4bf); color: #0b0f19; padding: 14px; margin-top: 10px;}
-.error-msg { color: #ef4444; font-size: 13px; margin-top: 10px; display: none; }
-.success-msg { color: #10b981; font-size: 13px; margin-top: 10px; display: none; }
-
-/* =========================================================================
-   8. УЛЬТРА-АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ (MEDIA QUERIES)
-   ========================================================================= */
-@media (max-width: 900px) {
-    .app-container {
-        grid-template-columns: 1fr;
-    }
-
-    /* Активация верхней мобильной плашки */
-    .mobile-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 70px;
-        padding: 0 20px;
-        background: rgba(10, 15, 30, 0.5);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        position: fixed;
-        width: 100%;
-        top: 0;
-        left: 0;
-        z-index: 80;
-    }
-
-    .mobile-menu-toggle {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #f8fafc;
-        padding: 8px 16px;
-        border-radius: 10px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    /* Преобразование меню в выезжающую боковую шторку */
-    .sidebar {
-        position: fixed;
-        left: -290px; /* Спрятано */
-        top: 0;
-        width: 280px;
-        height: 100vh;
-        transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 150;
-        background: rgba(10, 15, 30, 0.9);
-        box-shadow: 20px 0 40px rgba(0,0,0,0.6);
-    }
-
-    .sidebar.open {
-        left: 0; /* Выезжает по команде из JS */
-    }
-
-    .close-mobile-menu {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: none;
-        border: none;
-        color: #94a3b8;
-        font-size: 32px;
-        cursor: pointer;
-    }
-
-    /* Мобильный рендеринг рабочей зоны контента */
-    .main-content {
-        margin-left: 0;
-        padding: 95px 12px 20px 12px; /* Защита от залезания под мобильную шапку */
-        height: auto;
-        min-height: calc(100vh - 70px);
-        overflow: visible; /* На смартфонах листаем привычно всю страницу */
-    }
-
-    .about-card, .chat-section {
-        padding: 24px 16px;
-        max-height: none; /* Убираем жесткий внутренний скролл */
-    }
-
-    .about-scroll-container {
-        overflow-y: visible;
-        padding-right: 0;
-    }
-    
-    .about-card h1 { font-size: 24px; }
-    .about-paragraph { font-size: 14.5px; text-align: left; }
-    .chat-messages { height: 300px; }
-    .faq-question { font-size: 14.5px; padding: 15px; }
-}
+.input-group input { width: 100%; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: #fff; }
+.error-msg { color: #ef4444; font-size: 13px; display: none; margin-top: 10px; }
+.success-msg { color: #10b981; font-size: 13px; display: none; margin-top: 10px; }
