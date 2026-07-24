@@ -4,21 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dropuc — Официальный сайт</title>
-    <!-- Подключение стилей -->
     <link rel="stylesheet" href="style.css">
-    <!-- Подключение шрифта Inter для премиального вида -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- ЗАДНИЙ ПЛАН: Плавающие неоновые сферы жидкого стекла -->
+    <!-- ЗАДНИЙ ПЛАН: Плавающие неоновые сферы -->
     <div class="glass-bg-container">
         <div class="glass-sphere sphere-emerald"></div>
         <div class="glass-sphere sphere-teal"></div>
         <div class="glass-sphere sphere-purple"></div>
     </div>
 
-    <!-- МОБИЛЬНАЯ ШАПКА: Отображается только на смартфонах -->
+    <!-- МОБИЛЬНАЯ ШАПКА -->
     <div class="mobile-header">
         <div class="logo">
             <img src="https://drive.google.com/uc?export=view&id=1lLmFNZZcRe6i6pkYUzOcJBGdOSVMqnk8" alt="D" class="logo-img">
@@ -27,12 +25,11 @@
         <button id="mobileMenuToggle" class="mobile-menu-toggle">☰ Меню</button>
     </div>
 
-    <!-- ОСНОВНОЙ КОНТЕЙНЕР САЙТА -->
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
     <div class="app-container">
         
-        <!-- БОКОВАЯ ПАНЕЛЬ НАВИГАЦИИ (САЙДБАР) -->
+        <!-- БОКОВАЯ ПАНЕЛЬ (САЙДБАР) -->
         <aside class="sidebar" id="sidebarMenu">
-            <!-- Кнопка закрытия для мобильной шторки -->
             <button id="closeMobileMenu" class="close-mobile-menu">&times;</button>
             
             <div class="sidebar-top">
@@ -40,14 +37,15 @@
                     <img src="https://drive.google.com/uc?export=view&id=1lLmFNZZcRe6i6pkYUzOcJBGdOSVMqnk8" alt="D" class="logo-img">
                     <span>Dropuc</span>
                 </div>
-                <!-- Статус авторизации пользователя -->
                 <span id="userStatus" class="user-status">Привет, Гость!</span>
             </div>
 
-            <!-- Меню переключения разделов сайта -->
+            <!-- Обновленная навигация с Профилем и Магазином -->
             <nav class="sidebar-nav">
                 <button class="nav-item active" data-tab="about-tab">👤 Обо мне</button>
                 <button class="nav-item" data-tab="chat-tab">💬 Комната общения</button>
+                <button class="nav-item" data-tab="profile-tab" id="profileNavItem" style="display: none;">⚙️ Мой Профиль</button>
+                <button class="nav-item" data-tab="shop-tab">🛒 Магазин</button>
                 <button class="nav-item" data-tab="faq-tab">❓ Частые вопросы</button>
             </nav>
 
@@ -56,16 +54,15 @@
             </div>
         </aside>
 
-        <!-- ГЛАВНАЯ ОБЛАСТЬ ВЫВОДА КОНТЕНТА -->
+        <!-- ГЛАВНАЯ ОБЛАСТЬ -->
         <main class="main-content">
             
-            <!-- ВКЛАДКА: ОБО МНЕ (С внутренней плавной прокруткой текста) -->
+            <!-- ВКЛАДКА 1: ОБО МНЕ -->
             <section class="tab-content active" id="about-tab">
                 <div class="glass-card about-card">
                     <div class="badge">История канала Dropuc</div>
                     <h1>Мой путь в Майнкрафте</h1>
                     
-                    <!-- Контейнер с прокруткой -->
                     <div class="about-scroll-container">
                         <p class="about-paragraph">
                             Привет! Я — <span class="highlight-text">Dropuc</span>, и это история моего канала. В 2025 году я запустил свой первый проект. Всё шло отлично: просмотры росли, Майнкрафт затягивал. Но по незнанию я совершил классическую ошибку — решил снимать Shorts на английском языке.
@@ -87,7 +84,6 @@
                             Это только начало. Здесь не будет фальши — только качественное, уютное и атмосферное выживание в Майнкрафте от человека, который знает своё дело. Добро пожаловать в команду!
                         </p>
 
-                        <!-- Неоновая кнопка подписки -->
                         <div class="about-actions">
                             <a href="https://www.youtube.com/@DropucMC" target="_blank" class="btn btn-youtube">
                                 🔴 Подписаться на DropucMC
@@ -97,23 +93,85 @@
                 </div>
             </section>
 
-            <!-- ВКЛАДКА: FIREBASE ОНЛАЙН ЧАТ -->
+            <!-- ВКЛАДКА 2: ЧАТ (+5 XP ЗА СООБЩЕНИЕ) -->
             <section class="tab-content" id="chat-tab">
                 <div class="glass-card chat-section" id="chatBlock">
                     <div class="chat-header">
                         <h3>Комната общения</h3>
-                        <span class="chat-online">Онлайн сеть (Firebase)</span>
+                        <span class="chat-online">+5 XP за сообщение</span>
                     </div>
-                    
-                    <!-- Список сообщений -->
                     <div id="chatMessages" class="chat-messages"></div>
-
-                    <!-- Интерактивная зона ввода (Управляется через JS) -->
                     <div id="chatInputArea" class="chat-input-area"></div>
                 </div>
             </section>
 
-            <!-- ВКЛАДКА: ИНТЕРАКТИВНЫЙ FAQ (АККОРДЕОН) -->
+            <!-- ВКЛАДКА 3: РЕДАКТИРОВАНИЕ ПРОФИЛЯ -->
+            <section class="tab-content" id="profile-tab">
+                <div class="glass-card profile-card">
+                    <h2>Настройки профиля</h2>
+                    <div class="user-info-summary">
+                        <div class="avatar-preview-container">
+                            <img id="profileAvatarPreview" src="https://api.dicebear.com/7.x/bottts/svg?seed=1" alt="Avatar" class="profile-avatar">
+                            <img id="profileFramePreview" src="" class="avatar-frame-overlay" style="display: none;">
+                        </div>
+                        <div>
+                            <h3 id="profileUsernameDisplay">Пользователь</h3>
+                            <p>Ваш баланс: <span id="profileXpDisplay" class="highlight-text">0 XP</span></p>
+                        </div>
+                    </div>
+
+                    <hr class="divider">
+
+                    <h3>Выберите аватарку из галереи</h3>
+                    <div class="avatar-gallery" id="avatarGallery">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=1" class="avatar-option selected" data-avatar="https://api.dicebear.com/7.x/bottts/svg?seed=1">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=2" class="avatar-option" data-avatar="https://api.dicebear.com/7.x/bottts/svg?seed=2">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=3" class="avatar-option" data-avatar="https://api.dicebear.com/7.x/bottts/svg?seed=3">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=4" class="avatar-option" data-avatar="https://api.dicebear.com/7.x/bottts/svg?seed=4">
+                    </div>
+
+                    <form id="updateProfileForm" class="profile-form">
+                        <div class="input-group">
+                            <label for="editPassword">Новый пароль (оставьте пустым, если не меняете)</label>
+                            <input type="password" id="editPassword" placeholder="Введите новый пароль">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ВКЛАДКА 4: МАГАПЗИН -->
+            <section class="tab-content" id="shop-tab">
+                <div class="glass-card shop-card">
+                    <div class="shop-header">
+                        <h2>Магазин кастомизации</h2>
+                        <div class="xp-badge">Баланс: <span id="shopXpBalance">0</span> XP</div>
+                    </div>
+                    <p class="shop-subtitle">Зарабатывайте +5 XP за каждое сообщение в чате и покупайте эксклюзивные рамки!</p>
+
+                    <div class="shop-grid">
+                        <div class="shop-item glass-card">
+                            <div class="shop-item-img-wrap">
+                                <img src="gdj-frame-7120202_1920.png" alt="Лавровый венок" class="shop-item-frame">
+                            </div>
+                            <h4>Лавровый венок</h4>
+                            <p class="shop-item-price">50 XP</p>
+                            <button class="btn btn-submit btn-buy" data-item-id="frame_laurel" data-price="50" data-frame-url="gdj-frame-7120202_1920.png">Купить</button>
+                        </div>
+
+                        <div class="shop-item glass-card">
+                            <div class="shop-item-img-wrap">
+                                <img src="gdj-cityscape-2747226_1920.jpg" alt="Городской круг" class="shop-item-frame">
+                            </div>
+                            <h4>Городской круг</h4>
+                            <p class="shop-item-price">70 XP</p>
+                            <button class="btn btn-submit btn-buy" data-item-id="frame_city" data-price="70" data-frame-url="gdj-cityscape-2747226_1920.jpg">Купить</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ВКЛАДКА 5: FAQ -->
             <section class="tab-content" id="faq-tab">
                 <div class="faq-section">
                     <h2 class="faq-title">Часто задаваемые вопросы</h2>
@@ -135,30 +193,10 @@
                                 <span class="faq-arrow">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>Я обожаю легкие и стильные шейдеры! Мой главный выбор — <strong>Miniature Shader</strong>. Они отлично выглядят и не лагают. Вы можете скачать любую версию по кнопке ниже:</p>
+                                <p>Я обожаю легкие и стильные шейдеры! Мой главный выбор — <strong>Miniature Shader</strong>. Вы можете скачать любую версию ниже:</p>
                                 <a href="https://modrinth.com/shader/miniature-shader/versions" target="_blank" class="btn btn-download">
                                     ⚡ Скачать Miniature Shader на Modrinth
                                 </a>
-                            </div>
-                        </div>
-
-                        <div class="glass-card faq-item">
-                            <button class="faq-question">
-                                <span>Когда первый стрим?</span>
-                                <span class="faq-arrow">▼</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Стримы планируются! Я запущу свой первый стрим (пока без лица), как только наш канал Dropuc преодолеет отметку в 1500 подписчиков. Обязательно подписывайся, чтобы не пропустить этот момент!</p>
-                            </div>
-                        </div>
-
-                        <div class="glass-card faq-item">
-                            <button class="faq-question">
-                                <span>Как часто выходят новые ролики?</span>
-                                <span class="faq-arrow">▼</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Я стараюсь делать контент регулярно. Новые видео выходят, как только они полностью готовы, смонтированы и доведены до идеала!</p>
                             </div>
                         </div>
                     </div>
@@ -168,7 +206,7 @@
         </main>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ДЛЯ ВХОДА И РЕГИСТРАЦИИ -->
+    <!-- МОДАЛЬНОЕ ОКНО АВТОРИЗАЦИИ -->
     <div id="authModal" class="modal">
         <div class="modal-content glass-card">
             <span class="close-btn">&times;</span>
@@ -194,11 +232,8 @@
         </div>
     </div>
 
-    <!-- Загрузка скриптов Google Firebase SDK (v8.10.1) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    
-    <!-- Основной логический файл сайта -->
     <script src="script.js"></script>
 </body>
 </html>
