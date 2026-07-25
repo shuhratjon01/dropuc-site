@@ -25,7 +25,7 @@ const chatInputArea = document.getElementById('chatInputArea');
 const navItems = document.querySelectorAll('.nav-item');
 const tabContents = document.querySelectorAll('.tab-content');
 
-// Переключение вкладок
+// Функция переключения вкладок
 function switchTab(tabId) {
     tabContents.forEach(tab => tab.classList.remove('active'));
     navItems.forEach(item => item.classList.remove('active'));
@@ -38,12 +38,10 @@ function switchTab(tabId) {
 }
 
 navItems.forEach(item => {
-    item.addEventListener('click', () => {
-        switchTab(item.getAttribute('data-tab'));
-    });
+    item.addEventListener('click', () => switchTab(item.getAttribute('data-tab')));
 });
 
-// Авторизация и статус
+// Проверка входа пользователя
 function checkUserLogin() {
     const savedUser = localStorage.getItem('registeredUser');
     if (savedUser) {
@@ -62,6 +60,7 @@ function checkUserLogin() {
     }
 }
 
+// Загрузка данных профиля из Firebase
 function loadUserProfile(username) {
     database.ref('users/' + username).on('value', snapshot => {
         const data = snapshot.val() || {};
@@ -80,7 +79,7 @@ function loadUserProfile(username) {
     });
 }
 
-// Галерея аватарок
+// Выбор аватарки из галереи
 document.querySelectorAll('.avatar-option').forEach(img => {
     img.addEventListener('click', function() {
         document.querySelectorAll('.avatar-option').forEach(i => i.classList.remove('selected'));
@@ -103,6 +102,34 @@ document.getElementById('updateProfileForm').addEventListener('submit', function
 
     database.ref('users/' + currentUser).update(updates).then(() => {
         alert('Профиль успешно обновлен!');
+    });
+});
+
+// Форма входа/регистрации
+regForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = document.getElementById('regUsername').value.trim();
+    const password = document.getElementById('regPassword').value;
+
+    if (!username || !password) return;
+
+    const userRef = database.ref('users/' + username);
+    userRef.once('value').then(snapshot => {
+        if (snapshot.exists()) {
+            if (snapshot.val().password === password) {
+                localStorage.setItem('registeredUser', username);
+                authModal.style.display = 'none';
+                checkUserLogin();
+            } else {
+                alert('Неверный пароль!');
+            }
+        } else {
+            userRef.set({ password: password, xp: 0 }).then(() => {
+                localStorage.setItem('registeredUser', username);
+                authModal.style.display = 'none';
+                checkUserLogin();
+            });
+        }
     });
 });
 
@@ -173,7 +200,7 @@ database.ref('messages').orderByChild('timestamp').limitToLast(50).on('value', s
     }
 });
 
-// Магазин рамок
+// Логика покупки рамок
 document.querySelectorAll('.btn-buy').forEach(button => {
     button.addEventListener('click', function() {
         const currentUser = localStorage.getItem('registeredUser');
