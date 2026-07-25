@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <!-- ЗАДНИЙ ПЛАН: Плавающие неоновые сферы -->
+    <!-- ЗАДНИЙ ПЛАН: Анимированные неоновые сферы -->
     <div class="glass-bg-container">
         <div class="glass-sphere sphere-emerald"></div>
         <div class="glass-sphere sphere-teal"></div>
@@ -19,28 +19,27 @@
     <!-- МОБИЛЬНАЯ ШАПКА -->
     <div class="mobile-header">
         <div class="logo">
-            <img src="https://drive.google.com/uc?export=view&id=1lLmFNZZcRe6i6pkYUzOcJBGdOSVMqnk8" alt="D" class="logo-img">
+            <img src="./avatar.png" alt="Dropuc Logo" class="logo-img">
             <span>Dropuc</span>
         </div>
         <button id="mobileMenuToggle" class="mobile-menu-toggle">☰ Меню</button>
     </div>
 
-    <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР ПРИЛОЖЕНИЯ -->
     <div class="app-container">
         
-        <!-- БОКОВАЯ ПАНЕЛЬ (САЙДБАР) -->
+        <!-- БОКОВОЕ МЕНЮ (САЙДБАР) -->
         <aside class="sidebar" id="sidebarMenu">
             <button id="closeMobileMenu" class="close-mobile-menu">&times;</button>
             
             <div class="sidebar-top">
                 <div class="logo">
-                    <img src="https://drive.google.com/uc?export=view&id=1lLmFNZZcRe6i6pkYUzOcJBGdOSVMqnk8" alt="D" class="logo-img">
+                    <img src="./avatar.png" alt="Dropuc Logo" class="logo-img">
                     <span>Dropuc</span>
                 </div>
                 <span id="userStatus" class="user-status">Привет, Гость!</span>
             </div>
 
-            <!-- Обновленная навигация с Профилем и Магазином -->
             <nav class="sidebar-nav">
                 <button class="nav-item active" data-tab="about-tab">👤 Обо мне</button>
                 <button class="nav-item" data-tab="chat-tab">💬 Комната общения</button>
@@ -54,7 +53,7 @@
             </div>
         </aside>
 
-        <!-- ГЛАВНАЯ ОБЛАСТЬ -->
+        <!-- ГЛАВНЫЙ КОНТЕНТ -->
         <main class="main-content">
             
             <!-- ВКЛАДКА 1: ОБО МНЕ -->
@@ -67,23 +66,12 @@
                         <p class="about-paragraph">
                             Привет! Я — <span class="highlight-text">Dropuc</span>, и это история моего канала. В 2025 году я запустил свой первый проект. Всё шло отлично: просмотры росли, Майнкрафт затягивал. Но по незнанию я совершил классическую ошибку — решил снимать Shorts на английском языке.
                         </p>
-                        
                         <p class="about-paragraph">
-                            На канал пришло около <span class="highlight-text">200 иностранных подписчиков</span>, и тут алгоритмы YouTube сыграли со мной злую шутку. Когда я выпускал длинные ролики на русском языке, Ютуб в первую очередь тестировал их на англоязычных подписчиках. Они не понимали ни слова, просто пролистывали видео, и алгоритм намертво душил просмотры, считая контент неинтересным.
+                            На канал пришло около <span class="highlight-text">200 иностранных подписчиков</span>, и алгоритмы YouTube начали тестировать рускоязычные ролики на них. Из-за этого просмотры падали.
                         </p>
-                        
                         <p class="about-paragraph">
-                            Я пытался вывезти тот канал целый год. Это был жесткий, но важнейший опыт. Я не бросил дело, а сел, досконально разобрался в логике алгоритмов и понял, как устроена эта система. Усвоив все уроки, <span class="highlight-text">13 июля 2026 года</span> я с нуля создал новый канал <strong class="channel-name">DropucMC</strong>.
+                            Усвоив все уроки, <span class="highlight-text">13 июля 2026 года</span> я с нуля создал новый канал <strong class="channel-name">DropucMC</strong>. Результат не заставил себя ждать!
                         </p>
-                        
-                        <p class="about-paragraph">
-                            Чистая карма алгоритмов, только целевая аудитория и накопленный за год опыт. Результат всего за 6 дней говорит сам за себя: <span class="highlight-text">более 700 честных просмотров</span>, первые <span class="highlight-text">11 живых русскоязычных подписчиков</span> и более <span class="highlight-text">11 часов</span> суммарного времени просмотра.
-                        </p>
-                        
-                        <p class="about-paragraph">
-                            Это только начало. Здесь не будет фальши — только качественное, уютное и атмосферное выживание в Майнкрафте от человека, который знает своё дело. Добро пожаловать в команду!
-                        </p>
-
                         <div class="about-actions">
                             <a href="https://www.youtube.com/@DropucMC" target="_blank" class="btn btn-youtube">
                                 🔴 Подписаться на DropucMC
@@ -93,7 +81,7 @@
                 </div>
             </section>
 
-            <!-- ВКЛАДКА 2: ЧАТ (+5 XP ЗА СООБЩЕНИЕ) -->
+            <!-- ВКЛАДКА 2: ЧАТ -->
             <section class="tab-content" id="chat-tab">
                 <div class="glass-card chat-section" id="chatBlock">
                     <div class="chat-header">
@@ -105,7 +93,7 @@
                 </div>
             </section>
 
-            <!-- ВКЛАДКА 3: РЕДАКТИРОВАНИЕ ПРОФИЛЯ -->
+            <!-- ВКЛАДКА 3: МОЙ ПРОФИЛЬ -->
             <section class="tab-content" id="profile-tab">
                 <div class="glass-card profile-card">
                     <h2>Настройки профиля</h2>
@@ -150,22 +138,24 @@
                     <p class="shop-subtitle">Зарабатывайте +5 XP за каждое сообщение в чате и покупайте эксклюзивные рамки!</p>
 
                     <div class="shop-grid">
+                        <!-- Товар 1 -->
                         <div class="shop-item glass-card">
                             <div class="shop-item-img-wrap">
-                                <img src="gdj-frame-7120202_1920.png" alt="Лавровый венок" class="shop-item-frame">
+                                <img src="./gdj-frame-7120202_1920.png" alt="Лавровый венок" class="shop-item-frame">
                             </div>
                             <h4>Лавровый венок</h4>
                             <p class="shop-item-price">50 XP</p>
-                            <button class="btn btn-submit btn-buy" data-item-id="frame_laurel" data-price="50" data-frame-url="gdj-frame-7120202_1920.png">Купить</button>
+                            <button class="btn btn-submit btn-buy" data-item-id="frame_laurel" data-price="50" data-frame-url="./gdj-frame-7120202_1920.png">Купить</button>
                         </div>
 
+                        <!-- Товар 2 -->
                         <div class="shop-item glass-card">
                             <div class="shop-item-img-wrap">
-                                <img src="gdj-cityscape-2747226_1920.jpg" alt="Городской круг" class="shop-item-frame">
+                                <img src="./gdj-cityscape-2747226_1920.png" alt="Городской круг" class="shop-item-frame">
                             </div>
                             <h4>Городской круг</h4>
                             <p class="shop-item-price">70 XP</p>
-                            <button class="btn btn-submit btn-buy" data-item-id="frame_city" data-price="70" data-frame-url="gdj-cityscape-2747226_1920.jpg">Купить</button>
+                            <button class="btn btn-submit btn-buy" data-item-id="frame_city" data-price="70" data-frame-url="./gdj-cityscape-2747226_1920.png">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -175,7 +165,6 @@
             <section class="tab-content" id="faq-tab">
                 <div class="faq-section">
                     <h2 class="faq-title">Часто задаваемые вопросы</h2>
-                    
                     <div class="faq-container">
                         <div class="glass-card faq-item">
                             <button class="faq-question">
@@ -183,20 +172,7 @@
                                 <span class="faq-arrow">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>В основном я играю на версии 1.21.11, используя Fabric для лучшей оптимизации и работы модов.</p>
-                            </div>
-                        </div>
-
-                        <div class="glass-card faq-item">
-                            <button class="faq-question">
-                                <span>Какие шейдеры ты используешь в своих видео?</span>
-                                <span class="faq-arrow">▼</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Я обожаю легкие и стильные шейдеры! Мой главный выбор — <strong>Miniature Shader</strong>. Вы можете скачать любую версию ниже:</p>
-                                <a href="https://modrinth.com/shader/miniature-shader/versions" target="_blank" class="btn btn-download">
-                                    ⚡ Скачать Miniature Shader на Modrinth
-                                </a>
+                                <p>В основном я играю на версии 1.21.11 с модами Fabric.</p>
                             </div>
                         </div>
                     </div>
@@ -211,21 +187,18 @@
         <div class="modal-content glass-card">
             <span class="close-btn">&times;</span>
             <h2 id="modalTitle">Вход / Регистрация</h2>
-            <p class="modal-subtitle">Введите ник и пароль. Если ника нет в базе — он создастся автоматически.</p>
+            <p class="modal-subtitle">Введите ник и пароль для входа.</p>
             
             <form id="regForm">
                 <div class="input-group">
                     <label for="regUsername">Имя пользователя (Никнейм)</label>
-                    <input type="text" id="regUsername" placeholder="Введите ваш ник" required autocomplete="off">
+                    <input type="text" id="regUsername" placeholder="Ваш ник" required autocomplete="off">
                 </div>
                 
                 <div class="input-group">
                     <label for="regPassword">Пароль</label>
-                    <input type="password" id="regPassword" placeholder="Введите пароль" required>
+                    <input type="password" id="regPassword" placeholder="Ваш пароль" required>
                 </div>
-                
-                <div id="errorMessage" class="error-msg"></div>
-                <div id="successMessage" class="success-msg"></div>
 
                 <button type="submit" class="btn btn-submit" id="submitBtn">Войти / Создать</button>
             </form>
