@@ -1,3 +1,4 @@
+// Конфигурация базы данных Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDS7bXTTeEgUcKhVrGShqrpT5gQNus6cqI",
     authDomain: "dropuc-sait.firebaseapp.com",
@@ -11,7 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
-let selectedAvatarUrl = "https://api.dicebear.com/7.x/bottts/svg?seed=1";
+let selectedAvatarUrl = "./avatar.png";
 
 const authModal = document.getElementById('authModal');
 const openAuthBtn = document.getElementById('openAuthBtn');
@@ -25,7 +26,7 @@ const chatInputArea = document.getElementById('chatInputArea');
 const navItems = document.querySelectorAll('.nav-item');
 const tabContents = document.querySelectorAll('.tab-content');
 
-// Функция переключения вкладок
+// Переключение вкладок меню
 function switchTab(tabId) {
     tabContents.forEach(tab => tab.classList.remove('active'));
     navItems.forEach(item => item.classList.remove('active'));
@@ -35,10 +36,21 @@ function switchTab(tabId) {
 
     const targetNavItem = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
     if (targetNavItem) targetNavItem.classList.add('active');
+
+    // Закрываем мобильное меню при клике
+    document.getElementById('sidebarMenu').classList.remove('open');
 }
 
 navItems.forEach(item => {
     item.addEventListener('click', () => switchTab(item.getAttribute('data-tab')));
+});
+
+// Мобильное меню
+document.getElementById('mobileMenuToggle').addEventListener('click', () => {
+    document.getElementById('sidebarMenu').classList.add('open');
+});
+document.getElementById('closeMobileMenu').addEventListener('click', () => {
+    document.getElementById('sidebarMenu').classList.remove('open');
 });
 
 // Проверка входа пользователя
@@ -48,7 +60,7 @@ function checkUserLogin() {
         userStatus.textContent = `Привет, ${savedUser}!`;
         openAuthBtn.textContent = 'Выйти';
         openAuthBtn.onclick = () => { localStorage.removeItem('registeredUser'); checkUserLogin(); };
-        profileNavItem.style.display = 'block';
+        profileNavItem.style.display = 'flex';
         renderChatInput(savedUser);
         loadUserProfile(savedUser);
     } else {
@@ -60,7 +72,7 @@ function checkUserLogin() {
     }
 }
 
-// Загрузка данных профиля из Firebase
+// Загрузка профиля из Firebase
 function loadUserProfile(username) {
     database.ref('users/' + username).on('value', snapshot => {
         const data = snapshot.val() || {};
@@ -89,7 +101,7 @@ document.querySelectorAll('.avatar-option').forEach(img => {
     });
 });
 
-// Сохранение аватара/пароля
+// Сохранение изменений в профиле
 document.getElementById('updateProfileForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const currentUser = localStorage.getItem('registeredUser');
@@ -105,7 +117,7 @@ document.getElementById('updateProfileForm').addEventListener('submit', function
     });
 });
 
-// Форма входа/регистрации
+// Авторизация и регистрация
 regForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const username = document.getElementById('regUsername').value.trim();
@@ -124,7 +136,7 @@ regForm.addEventListener('submit', function(e) {
                 alert('Неверный пароль!');
             }
         } else {
-            userRef.set({ password: password, xp: 0 }).then(() => {
+            userRef.set({ password: password, xp: 0, avatar: './avatar.png' }).then(() => {
                 localStorage.setItem('registeredUser', username);
                 authModal.style.display = 'none';
                 checkUserLogin();
@@ -133,11 +145,11 @@ regForm.addEventListener('submit', function(e) {
     });
 });
 
-// Отправка сообщений (+5 XP)
+// Отрисовка формы ввода сообщений в чате
 function renderChatInput(username) {
     chatInputArea.innerHTML = `
         <form id="chatForm" style="display:flex; gap:10px;">
-            <input type="text" id="chatInput" class="input-group" style="flex-grow:1; margin:0;" placeholder="Напишите сообщение..." required autocomplete="off">
+            <input type="text" id="chatInput" placeholder="Напишите сообщение..." required autocomplete="off">
             <button type="submit" class="btn btn-primary">Отправить</button>
         </form>
     `;
@@ -156,13 +168,13 @@ function renderChatInput(username) {
                 database.ref('messages').push({
                     author: username,
                     text: text,
-                    avatar: userData.avatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=1',
+                    avatar: userData.avatar || './avatar.png',
                     frame: userData.equippedFrame || '',
                     time: timeString,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
 
-                // Начисление +5 XP
+                // Зачисление +5 XP за сообщение
                 database.ref('users/' + username + '/xp').transaction(current => (current || 0) + 5);
                 input.value = '';
             });
@@ -174,19 +186,21 @@ function renderGuestPrompt() {
     chatInputArea.innerHTML = `<div style="text-align:center; color:#94a3b8;">Войдите в аккаунт, чтобы писать в чат и зарабатывать XP!</div>`;
 }
 
-// Загрузка сообщений в чат
+// Загрузка сообщений из Firebase с защитой картинки аватара
 database.ref('messages').orderByChild('timestamp').limitToLast(50).on('value', snapshot => {
     chatMessages.innerHTML = '';
     const data = snapshot.val();
     if (data) {
         Object.keys(data).forEach(key => {
             const msg = data[key];
+            const userAvatar = msg.avatar && msg.avatar.trim() !== '' ? msg.avatar : './avatar.png';
+
             const div = document.createElement('div');
             div.className = 'message';
             div.innerHTML = `
                 <div style="display:flex; align-items:center;">
                     <div class="message-avatar-wrap">
-                        <img src="${msg.avatar}" class="message-avatar">
+                        <img src="${userAvatar}" class="message-avatar" onerror="this.onerror=null; this.src='./avatar.png';">
                         ${msg.frame ? `<img src="${msg.frame}" class="avatar-frame-overlay">` : ''}
                     </div>
                     <span class="message-author">${escapeHTML(msg.author)}</span>
@@ -200,7 +214,7 @@ database.ref('messages').orderByChild('timestamp').limitToLast(50).on('value', s
     }
 });
 
-// Логика покупки рамок
+// Покупка рамок
 document.querySelectorAll('.btn-buy').forEach(button => {
     button.addEventListener('click', function() {
         const currentUser = localStorage.getItem('registeredUser');
